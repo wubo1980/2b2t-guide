@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://2b2t-guide.vercel.app/sitemap.xml
