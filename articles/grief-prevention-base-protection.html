@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Grief Prevention: How to Protect Your Base (2026 Guide) | 2B2T Guide</title>
+  <meta name="description" content="Learn how to protect your base on 2B2T. Anti-griefing strategies, hidden bunker designs, camouflage techniques, and what to do when you get found.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+  .content-container { max-width: 820px; margin: 0 auto; }
+
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26, 26, 26, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--pixel-border);
+    height: var(--nav-height);
+    transition: var(--transition);
+  }
+
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: var(--nav-height);
+  }
+
+  .nav-logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transition: var(--transition);
+  }
+  .nav-links a:hover { color: var(--text-main); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  [data-nav-toggle] { display: none; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; padding: 8px; }
+
+  .article-header {
+    padding: calc(var(--nav-height) + 60px) 24px 40px;
+    text-align: center;
+  }
+
+  .breadcrumb {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    color: var(--text-faint); font-size: 0.82rem;
+    justify-content: center; margin-bottom: 20px;
+  }
+  .breadcrumb a { color: var(--accent-2); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+
+  .article-header h1 {
+    font-family: "Press Start 2P", cursive;
+    font-size: clamp(0.9rem, 1.9vw, 1.35rem);
+    color: var(--accent);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto 18px;
+  }
+
+  .article-meta {
+    color: var(--text-soft);
+    font-size: 0.82rem;
+    display: flex; flex-wrap: wrap; gap: 8px 16px;
+    justify-content: center;
+  }
+  .article-meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+  .article-body {
+    padding: 0 24px 60px;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .article-body h2 {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin: 52px 0 20px;
+    line-height: 1.5;
+  }
+
+  .article-body h3 {
+    font-size: 0.92rem;
+    color: var(--accent-3);
+    margin: 34px 0 12px;
+    font-weight: 600;
+  }
+
+  .article-body p { margin-bottom: 20px; }
+  .article-body ul, .article-body ol { margin: 0 0 20px 24px; }
+  .article-body li { margin-bottom: 8px; }
+  .article-body strong { color: var(--accent-2); font-weight: 600; }
+  .article-body em { color: var(--text-soft); }
+
+  .article-body a { color: var(--accent); }
+  .article-body a:hover { color: var(--accent-2); }
+
+  .key-tip {
+    background: rgba(90, 143, 60, 0.1);
+    border-left: 3px solid var(--accent-2);
+    padding: 16px 20px; margin: 28px 0; border-radius: 0 4px 4px 0;
+    font-size: 0.92rem;
+  }
+  .key-tip strong { color: var(--accent-2); }
+
+  .warning-box {
+    background: rgba(255, 68, 68, 0.08);
+    border-left: 3px solid var(--accent-danger);
+    padding: 16px 20px; margin: 28px 0; border-radius: 0 4px 4px 0;
+    font-size: 0.92rem;
+  }
+  .warning-box strong { color: var(--accent-danger); }
+
+  footer {
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid var(--pixel-border);
+    padding: 40px 24px; text-align: center;
+    position: relative; z-index: 2;
+  }
+
+  .footer-discord {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #5865F2; color: #fff;
+    font-weight: 600; font-size: 0.82rem;
+    padding: 10px 24px; text-decoration: none;
+    margin-bottom: 20px;
+  }
+  .footer-discord:hover { background: #4752C4; color: #fff; }
+
+  footer p { color: var(--text-faint); font-size: 0.78rem; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    [data-nav-toggle] { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; gap: 16px; padding: 20px 0; border-top: 1px solid var(--pixel-border); margin-top: 10px; }
+    .nav-inner { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="nav-logo">2B2T Guide</a>
+    <button data-nav-toggle aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    <ul class="nav-links" data-nav-menu>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="how-to-leave-spawn.html">Spawn</a></li>
+      <li><a href="best-hacked-clients.html">Clients</a></li>
+      <li><a href="base-security-guide.html">Security</a></li>
+      <li><a href="survival-guide.html">Survival</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="article-header">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>/</span>
+      <span>Grief Prevention</span>
+    </div>
+    <h1>2B2T Grief Prevention: How to Protect Your Base (2026 Guide)</h1>
+    <div class="article-meta">
+      <span>Updated May 2026</span>
+      <span>Reading time: 9 min</span>
+    </div>
+  </div>
+</header>
+
+<article class="article-body">
+<div class="container content-container">
+
+<p>Every new 2B2T player builds their first base, logs off, and logs back in to find a crater. This isn't a glitch — it's the server. On an anarchy server without land claims or protections, griefing isn't a violation of rules. It's the entire point.</p>
+
+<p>But veterans have bases that survive for months or even years. The difference isn't luck. It's a systematic approach to location, construction, access control, and operational security. This guide covers how to think about base protection on 2B2T, with specific techniques that work in the current server meta.</p>
+
+<div class="warning-box">
+<strong>Hard truth:</strong> No base is unraidable on 2B2T. The goal is not invincibility — it's making your base cost more to find and raid than the raider is willing to spend.
+</div>
+
+<h2>Location Strategy: The Most Important Decision</h2>
+
+<p>Where you build determines 80% of your base survivability. Most players build within 10,000 blocks of spawn because it's convenient. Those bases are found within hours. The key is balancing distance with accessibility.</p>
+
+<h3>Optimal Distance Ranges</h3>
+
+<ul>
+  <li><strong>0&ndash;10k from spawn</strong> — Guaranteed to be found within days. Only use for decoy bases or temporary stashes.</li>
+  <li><strong>10k&ndash;100k</strong> — Found by random travelers within weeks. Decent for medium-term bases with good hiding.</li>
+  <li><strong>100k&ndash;1M</strong> — Safe from casual discovery. Main base territory for experienced players. Most X-ray and highway travelers stop here.</li>
+  <li><strong>1M+</strong> — Extremely safe from random discovery, but travel time becomes a logistical burden. Worth it for main bases with significant time investment.</li>
+</ul>
+
+<div class="key-tip">
+<strong>The sweet spot:</strong> 200k&ndash;500k blocks along a secondary axis (not the main highways). Far enough to avoid casual traffic, close enough that a 10-minute Nether travel gets you there.
+</div>
+
+<h3>Axis Choice Matters</h3>
+<p>The X and Z axes (the cardinal highways) are the most traveled routes. The diagonals — X/Z combined — receive significantly less traffic. Building 300k in the X direction and 100k in the Z direction puts you off the main corridors in multiple dimensions.</p>
+
+<h3>Underground vs. Aboveground</h3>
+<p>Aboveground bases on 2B2T are spotted immediately by anyone flying overhead or using a map renderer. Underground bases, especially at Y-level -30 to -50 in deepslate layers, are invisible to most surface-level exploration. The tradeoff is that digging and building underground takes significantly longer.</p>
+
+<h2>Construction Techniques</h2>
+
+<h3>The Hidden Entrance</h3>
+<p>The single most effective protection technique is making your entrance invisible. A door in a cliff face is obvious. An entrance behind a waterfall, inside a lava pool you can fire-resist through, or accessible only by a specific minecart track from a random location — those require the raider to know exactly what they're looking for.</p>
+
+<h3>Multi-Layer Defense</h3>
+<p>A single layer of obsidian is a speed bump. Veterans build in layers:</p>
+<ul>
+  <li><strong>Layer 1 (Camouflage)</strong> — blend the outer walls into natural terrain. Deepslate gray blends into deepslate caves. Blackstone blends into basalt deltas.</li>
+  <li><strong>Layer 2 (Obstruction)</strong> — obsidian or reinforced deepslate outer shell. Enough to stop casual break-ins.</li>
+  <li><strong>Layer 3 (Water or Lava)</strong> — a fluid layer between walls slows digging and causes inventory problems for raiders.</li>
+  <li><strong>Layer 4 (Inner Core)</strong> — chests and valuables behind an additional obsidian wall, ideally with a separate entrance code or mechanism.</li>
+</ul>
+
+<h3>Portal Security</h3>
+<p>Nether portals are a common point of entry. If your base has a portal, hide it in a separate sealed room — not in your main storage area. Better yet, use a portal-less Nether roof route to reach your base from an unmarked Nether location.</p>
+
+<h2>Operational Security (OpSec)</h2>
+
+<p>Even a perfectly hidden base gets found if you're careless about how you use it. OpSec on 2B2T is about minimizing the digital footprint between you and your base.</p>
+
+<h3>Coordinate Discipline</h3>
+<p>Never share base coordinates — not in chat, not in DMs, not on Discord, not with "trusted" friends. The most common way bases get griefed is through a trust violation. If you must share, restrict it to one person you've played with for months, and use end-to-end encrypted chat.</p>
+
+<h3>Travel Patterns</h3>
+<p>If you always log out at your base and log in at your base, anyone observing your connection patterns can triangulate your location. Log out at a random intermediate point and travel to your base in a single session. Reverse the process when logging out.</p>
+
+<h3>Don't Build Landmarks</h3>
+<p>Tall towers, unusual terrain modifications, obvious lighting patterns through cave ceilings — these are landmarks that stand out on map renders and draw exactly the kind of attention you don't want. Keep your base footprint as small and natural as possible.</p>
+
+<h2>Decoy Bases and Stashes</h2>
+
+<p>Smart players don't put all their resources in one location. The decoy base strategy involves building a small, obvious base with a moderate amount of loot. Raiders who find it think they got your main stash and leave without looking further. Your real valuables are in a completely separate, hidden location.</p>
+
+<p>A practical split:</p>
+<ul>
+  <li><strong>Decoy base</strong> — within 50k of spawn, moderate loot (iron, some diamonds, basic tools), unprotected</li>
+  <li><strong>Operational base</strong> — at 200k+, crafting area, farms, enchanting setup</li>
+  <li><strong>Vault</strong> — at 500k+ in a completely different direction, buried deep underground, containing your most valuable items</li>
+</ul>
+
+<div class="key-tip">
+<strong>Vault principle:</strong> The vault should be a single chest, not a base. No crafting tables, no furnaces, no bed. Just a chest and maybe a trapped chest alarm. If it looks like a base, it gets explored. If it's a single chest at Y=-50 in a random deepslate tunnel, it never gets found.
+</div>
+
+<h2>When You Get Found</h2>
+
+<p>Every 2B2T player eventually loses a base. When it happens — and it will — how you respond determines whether you bounce back or quit.</p>
+
+<ol>
+  <li><strong>Don't log in to investigate immediately.</strong> If someone found your base, they might be waiting for you to return and collect your remaining items (called "baiting").</li>
+  <li><strong>Assume everything is compromised.</strong> If they found one base location, they may have found others. Change your OpSec patterns immediately.</li>
+  <li><strong>Cut your losses.</strong> Don't spend hours trying to salvage a base that's known. Move on. Build somewhere new with the lessons learned.</li>
+  <li><strong>Analyze how they found you.</strong> Was your entrance visible? Did you tell someone? Were you careless in chat? The only failure is repeating the same mistake.</li>
+</ol>
+
+<h2>The Reality of 2B2T Base Protection</h2>
+
+<p>The best-protected bases on 2B2T follow a simple philosophy: <strong>be boring</strong>. A boring base in a boring location with no unusual features and zero player traffic is a base that survives. Flashy megabases get destroyed within days. A simple 5x5 room with a bed, a crafting table, and a furnace at 400k off-axis will outlast any monument.</p>
+
+<p>Start with survival basics in our <a href="survival-guide.html">Survival Guide</a>, then graduate to the <a href="base-security-guide.html">full Base Security Guide</a> for detailed construction blueprints.</p>
+
+</div>
+</article>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 2B2T Guide. Not affiliated with Mojang or 2b2t.org.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var nav = document.querySelector('.site-nav');
+  var scrollHandler = function() {
+    if (window.scrollY > 24 && nav) nav.classList.add('scrolled');
+    else if (nav) nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', scrollHandler, { passive: true });
+
+  var toggle = document.querySelector('[data-nav-toggle]');
+  var menu = document.querySelector('[data-nav-menu]');
+  if (toggle && menu) {
+    toggle.addEventListener('click', function() {
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); });
+    });
+  }
+})();
+</script>
+</body>
+</html>
