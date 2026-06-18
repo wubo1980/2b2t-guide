@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Chat Moderation: How Mojang Forced the Anarchy Server to Change (2025-2026) | 2B2T Guide</title>
+  <meta name="description" content="2B2T added chat filters and updated its terms after Mojang pressure in December 2025. Here is what changed, why the community is split, and what it means for anarchy players.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="../index.html">&larr; Back to Home</a>
+      <a href="how-to-leave-spawn.html">Beginner</a>
+      <a href="best-hacked-clients.html">Clients</a>
+      <a href="world-download-guide.html">Downloads</a>
+      <a href="base-security-guide.html">Base</a>
+      <a href="famous-bases-events.html">History</a>
+      <a href="survival-guide.html">Survival</a>
+      <a href="highway-network.html">Highways</a>
+      <a href="duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>🔍 2B2T Chat Moderation & Mojang Changes</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Server News</span>
+          <h1 class="article-title">🔍 2B2T Chat Moderation: How Mojang Forced the Anarchy Server to Change (2025-2026)</h1>
+          <p class="muted">In December 2025, the unthinkable happened: 2B2T — the oldest anarchy server in Minecraft with a 15-year history of zero moderation — added chat filters and updated its terms after pressure from Mojang. Here is the full story, timeline, and what it means for players.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t chat filter, 2b2t moderation, 2b2t mojang changes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="../images/2b2t-spawn-aerial.png" alt="2B2T spawn showing the destruction — the server that had no rules now has chat filters" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+          
+          <p>For nearly 15 years, 2B2T defined itself by a single principle: no rules. Players could say anything, build anywhere, grief without consequence, and trade freely. It was the last bastion of true anarchy in the Minecraft server landscape — until December 2025, when everything changed.</p>
+
+          <p>Mojang, the developer of Minecraft, officially notified 2B2T that the server needed to comply with Microsoft's usage guidelines and community standards. The result was a series of changes that split the community and forced the oldest anarchy server to introduce rules it had resisted for a decade and a half.</p>
+
+          <p>This article covers the complete timeline, what specifically changed, how the community reacted, and what players need to know in 2026.</p>
+
+          <h2 id="timeline">The Timeline: How It Happened</h2>
+
+          <h3>December 2025: The Official Notice</h3>
+          <p>According to the <a href="https://www.2b2t.org/recent-changes/" target="_blank" rel="noreferrer">official 2B2T transparency post</a> published December 19, 2025, the server received an official notice from Mojang / Microsoft requiring compliance with the <a href="https://www.minecraft.net/en-us/usage-guidelines" target="_blank" rel="noreferrer">Minecraft Usage Guidelines</a>, <a href="https://www.minecraft.net/en-us/community-standards" target="_blank" rel="noreferrer">Minecraft Community Standards</a>, and <a href="https://www.xbox.com/en-CA/legal/community-standards" target="_blank" rel="noreferrer">Xbox Community Standards</a>. For a server built on the premise of having zero moderation, this was an existential moment.</p>
+
+          <p>2B2T updated its Terms page to reflect the new requirements. The wording change itself was minor — but the implications were enormous. The server that famously had no rules was now legally bound by Microsoft's content policies.</p>
+
+          <h3>December 11, 2025: Bedrock Edition Experiment</h3>
+          <p>Around the same time, 2B2T began an experiment allowing Bedrock Edition players to join the server. In the transparency post, the admin explained this was intended to give all players a chance to experience 2B2T. However, the community pushed back hard, arguing that the Bedrock project was diverting resources from improving the Java experience. The experiment was eventually shut down.</p>
+
+          <h3>December 2025 &mdash; January 2026: Chat Filter Implementation</h3>
+          <p>The most visible change was the introduction of a chat filter. Previously, 2B2T allowed any in-game text without moderation — true anarchy communication. The new system blocked certain words and phrases. The 2b2t.info status page noted "over-blocking" as a reported issue, meaning the filter sometimes blocked legitimate messages.</p>
+
+          <p>Community trackers on 2b2t.info confirmed: "Chat filter update — Over-blocking seems to be an issue." Players reported that even mundane words were occasionally blocked, creating frustration beyond just the philosophical objection to moderation.</p>
+
+          <h2 id="community-reaction">Community Reaction: A Server Divided</h2>
+
+          <p>The reaction was immediate and polarized. Major 2B2T content creators weighed in:</p>
+
+          <ul>
+            <li><strong>SalC1</strong> published "About 2b2t's New Rules..." (December 27, 2025), which gained over 342,000 views. He broke down the policy changes and their practical implications for anarchy gameplay.</li>
+            <li><strong>FitMC</strong>, the most prominent 2B2T YouTuber with millions of subscribers, released "Minecraft's Censorship Situation is WORSE Than You Think" (February 27, 2026), attracting 482,000+ views. FitMC contextualized the 2B2T changes within a broader trend of increasing moderation across Minecraft servers.</li>
+          </ul>
+
+          <p>GamesRadar+ and Yahoo Tech both covered the story, with headlines emphasizing the irony of a 15-year-old anarchy server being forced to moderate its chat. ResetEra's gaming forum hosted a lengthy discussion thread debating whether compliance with Mojang fundamentally undermined the concept of "true anarchy."</p>
+
+          <div class="callout">The core question the community has been debating since December 2025: Can a server still call itself an anarchy server if it has chat moderation? There is no consensus — and the answer depends entirely on how you define "anarchy."</div>
+
+          <h2 id="what-changed">What Actually Changed</h2>
+
+          <p>It is easy to overstate the changes. Here is what players actually experience differently in 2026:</p>
+
+          <ul>
+            <li><strong>Chat filter is active but imperfect.</strong> Certain words will not send. The filter occasionally over-blocks, which the admin has acknowledged as an issue.</li>
+            <li><strong>Terms page was updated.</strong> The legal agreement players accept before joining now references Mojang/Microsoft policies. For most players, this changes nothing about how they play.</li>
+            <li><strong>Bedrock support was removed.</strong> The experiment lasted approximately 2-3 months before being shut down. The server is Java-only again.</li>
+            <li><strong>Gameplay remains unchanged.</strong> Griefing, stealing, PvP, duping (when possible), and all other anarchy behaviors are still permitted. The moderation is limited to chat content and server-performance-impacting behavior.</li>
+          </ul>
+
+          <h2 id="what-didnt-change">What Did NOT Change</h2>
+
+          <p>Despite the headlines, the core 2B2T experience remains largely intact:</p>
+
+          <ul>
+            <li><strong>No rules on gameplay.</strong> You can still grief, raid, kill, steal, and destroy.</li>
+            <li><strong>No permanent bans</strong> for gameplay offenses.</li>
+            <li><strong>No anti-cheat for PvP.</strong> Hacked clients remain the norm.</li>
+            <li><strong>The queue is still long.</strong> Mojang did not fix that.</li>
+            <li><strong>Spawn is still destroyed.</strong> The landscape of craters and lava remains as hostile as ever.</li>
+          </ul>
+
+          <h2 id="bedrock-experiment">The Bedrock Experiment: Why It Failed</h2>
+
+          <p>The Bedrock addition was a controversial companion to the moderation changes. Announced on December 11, 2025, as an experiment to broaden access, it was met with opposition from the Java player base. Critics pointed to ongoing issues — chunk loading performance degradation after the 1.21.4 update, network instability from DDoS attacks — and argued that Bedrock support should not be prioritized over fixing existing problems.</p>
+
+          <p>The admin acknowledged the concerns: "We are not prioritizing the Bedrock experience over the Java experience." However, the experiment continued for several months before ultimately being shut down. As 2b2t.info confirmed by early 2026: "Bedrock support gone."</p>
+
+          <h2 id="technical-background">Technical Context: Why This Happened Now</h2>
+
+          <p>The Mojang enforcement did not come out of nowhere. Several factors converged in 2025:</p>
+
+          <ul>
+            <li><strong>Microsoft's ongoing platform compliance push</strong> across all Minecraft servers, not just 2B2T.</li>
+            <li><strong>1.21.4 server update</strong> introduced chunk loading issues that required extensive work, making the server more visible to Mojang's monitoring.</li>
+            <li><strong>Network attacks</strong> over the preceding months had already put the server in a vulnerable position, requiring significant investment in mitigation.</li>
+          </ul>
+
+          <p>The admin's transparency post noted that the chunk loading fixes, network mitigation, and terms compliance work were all happening in parallel — suggesting that Mojang's notice arrived during an already difficult period for the server's operation.</p>
+
+          <h2 id="what-it-means">What It Means for Players in 2026</h2>
+
+          <p>If you are a returning player worried about the "end of anarchy," here is the practical reality:</p>
+
+          <ol>
+            <li><strong>Your gameplay experience is barely affected.</strong> You cannot say certain things in chat now. That is the main difference.</li>
+            <li><strong>The Bedrock removal</strong> means nothing if you play on Java. The server population has not noticeably changed.</li>
+            <li><strong>The philosophical debate</strong> about whether 2B2T is "still anarchy" is active in the community, but practically, the server operates closer to its old self than any moderated server.</li>
+            <li><strong>Chunk loading and connection issues</strong> are a bigger practical problem than the chat filter for most players.</li>
+          </ol>
+
+          <p>The Mojang enforcement was a significant moment in 2B2T history — arguably the most consequential since the server's creation. But the server is still running, still uncensored in gameplay, and still the closest thing to true Minecraft anarchy available. The chat filter is a new reality to adapt to, not a reason to quit.</p>
+
+          <h2 id="sources">Sources & Further Reading</h2>
+          <ul>
+            <li><a href="https://www.2b2t.org/recent-changes/" target="_blank" rel="noreferrer">2B2T Official Transparency Post (Dec 19, 2025)</a></li>
+            <li><a href="https://www.2b2t.org/phantoms/" target="_blank" rel="noreferrer">2B2T Phantoms in the End Update (Jun 12, 2025)</a></li>
+            <li><a href="https://www.gamesradar.com/games/minecraft/15-years-later-infamous-minecraft-anarchy-servers-strengthen-chat-moderation-at-the-reported-request-of-mojang-itself/" target="_blank" rel="noreferrer">GamesRadar+ Coverage</a></li>
+            <li><a href="https://www.youtube.com/watch?v=frMvy05GnRA" target="_blank" rel="noreferrer">SalC1 — About 2b2t's New Rules (342K views)</a></li>
+            <li><a href="https://www.youtube.com/watch?v=HUExHfkEwLM" target="_blank" rel="noreferrer">FitMC — Minecraft's Censorship Situation (482K views)</a></li>
+            <li><a href="https://2b2t.info/index.html" target="_blank" rel="noreferrer">2b2t.info — Server Status & News</a></li>
+            <li><a href="queue-wait-tips.html">2B2T Queue Guide</a></li>
+          </ul>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Facts</span>
+          <p>The chat filter was added in December 2025 after Mojang enforcement. Gameplay remains anarchic.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#timeline">Timeline of events</a></li>
+            <li><a class="inline-link" href="#community-reaction">Community reaction</a></li>
+            <li><a class="inline-link" href="#what-changed">What changed</a></li>
+            <li><a class="inline-link" href="#what-didnt-change">What did not change</a></li>
+            <li><a class="inline-link" href="#bedrock-experiment">Bedrock experiment</a></li>
+            <li><a class="inline-link" href="#technical-background">Technical context</a></li>
+            <li><a class="inline-link" href="#what-it-means">What it means for players</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss the Mojang changes, share opinions, and get updates on further policy shifts.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Continue learning about 2B2T's history, surviving spawn, and understanding the server's culture.</p>
+        </div>
+        <div class="related-grid">
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔥 How to Leave 2B2T Spawn (2026 Guide)</h3>
+            <p>A practical 2B2T spawn guide covering route choice, supplies, death resets, and how to survive the first hostile kilometers.</p>
+            <a class="card-link" href="../articles/how-to-leave-spawn.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">📜 Top 10 Most Famous 2B2T Bases & Events</h3>
+            <p>A history guide to famous 2B2T bases and events, from legendary builds to the social moments that shaped the server's mythology.</p>
+            <a class="card-link" href="../articles/famous-bases-events.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔄 2B2T Duplication Glitches: History & Current Status</h3>
+            <p>How dupes shaped the 2B2T economy and what the current status means for modern players.</p>
+            <a class="card-link" href="../articles/duplication-glitches.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🛠️ 2B2T Survival Guide: Food, Tools & First Base</h3>
+            <p>A new-player 2B2T survival guide for food, basic tools, route discipline, and first hidden base.</p>
+            <a class="card-link" href="../articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> © 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  /**
+   * Toggles the navigation background based on the scroll position.
+   */
+  function updateNavigationState() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) {
+      return;
+    }
+
+    if (window.scrollY > 24) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  /**
+   * Connects the mobile navigation button with the menu panel.
+   */
+  function setupMobileNavigation() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var menu = document.querySelector('[data-nav-menu]');
+    if (!toggle || !menu) {
+      return;
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /**
+   * Starts all small UI behaviors after the DOM is ready.
+   */
+  function bootSiteUI() {
+    updateNavigationState();
+    setupMobileNavigation();
+    window.addEventListener('scroll', updateNavigationState, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>

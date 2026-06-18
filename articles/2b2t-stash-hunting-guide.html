@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Stash Hunting: How to Find Hidden Bases and Old Stashes | 2B2T Guide</title>
+  <meta name="description" content="Learn 2B2T stash hunting techniques: how to find old stashes, hidden bases, and abandoned loot using world downloads, terrain analysis, and coordinate research.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="../index.html">&larr; Back to Home</a>
+      <a href="how-to-leave-spawn.html">Beginner</a>
+      <a href="best-hacked-clients.html">Clients</a>
+      <a href="world-download-guide.html">Downloads</a>
+      <a href="base-security-guide.html">Base</a>
+      <a href="famous-bases-events.html">History</a>
+      <a href="survival-guide.html">Survival</a>
+      <a href="highway-network.html">Highways</a>
+      <a href="duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>🎯 2B2T Stash Hunting: How to Find Hidden Bases & Old Stashes</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Raiding Strategy</span>
+          <h1 class="article-title">🎯 2B2T Stash Hunting: How to Find Hidden Bases &amp; Old Stashes</h1>
+          <p class="muted">Stash hunting is one of the most rewarding activities on 2B2T. With the world download, map rendering tools, and knowledge of player behavior, anyone can learn to find abandoned stashes and hidden bases. This guide covers what works and what does not.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t stash hunting, 2b2t find stashes, 2b2t base hunting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="../images/2b2t-highway-travel.png" alt="2B2T highway travel — stashes are often hidden near major travel routes" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+          
+          <p>Stash hunting on 2B2T is not just about finding free loot — it is a form of digital archaeology. Players have built, hidden, and abandoned bases on this server for over 15 years. Many of those stashes are still intact, waiting to be discovered by someone who knows where and how to look.</p>
+
+          <p>Unlike normal Minecraft servers where raiding requires a trail of clues or insider information, 2B2T offers a unique advantage: the world download. The public world map archives — including the massive 24TB project covering over 1 million blocks in each direction — give stash hunters a tool that no other Minecraft server provides.</p>
+
+          <p>This guide covers the practical methods that actually work for finding stashes, the tools you need, and the common mistakes that waste time.</p>
+
+          <h2 id="why-stash-hunting-works">Why Stash Hunting Works on 2B2T</h2>
+
+          <p>Three factors make 2B2T uniquely suited to stash hunting:</p>
+
+          <ul>
+            <li><strong>The world never resets.</strong> The same world has been running since February 2011. Every block placed is still there.</li>
+            <li><strong>Players quit, get bored, or move.</strong> Thousands of players have built bases and then abandoned them. The ones who quit will never come back for their gear.</li>
+            <li><strong>World downloads exist.</strong> You can analyze the full terrain offline and identify suspicious patterns without ever logging in.</li>
+          </ul>
+
+          <p>The result is a raiding ecosystem that rewards research, patience, and knowledge of player psychology more than combat skill.</p>
+
+          <h2 id="essential-tools">Essential Tools for Stash Hunting</h2>
+
+          <h3>1. The 2B2T World Download</h3>
+          <p>This is your single most powerful tool. The <a href="world-download-guide.html">world download</a> contains the entire server map up to the point of capture. You can load it in a single-player Minecraft instance with anarchy-compatible render settings and fly through the terrain at full speed. For the latest 24TB archive covering the full 1Mx1M block area, see the <a href="how-to-download-2b2t-1m-world-map-release.html">1M release guide</a>.</p>
+
+          <div class="key-tip">
+            <strong>Key insight:</strong> You do not need the full 24TB download to start stash hunting. The earlier 1TB release covers the core areas (roughly 500k x 500k) and is much faster to download. Most stashes are within this range anyway.
+          </div>
+
+          <h3>2. Map Rendering Software</h3>
+          <p>Tools like <strong>Minutor</strong>, <strong>AMIDST</strong>, or <strong>uNmINeD</strong> let you render the world download as a top-down map. You can scan thousands of chunks in minutes and spot unnatural terrain modifications — a telltale sign of player activity.</p>
+
+          <p>What to look for on rendered maps:</p>
+          <ul>
+            <li><strong>Regular patterns</strong> — straight lines, perfect circles, evenly spaced blocks that stand out against natural terrain</li>
+            <li><strong>Missing blocks</strong> — cleared areas in forests, mined-out sections in mountains</li>
+            <li><strong>Platforms and structures</strong> — floating blocks in the sky (common for travel bases), underground rooms visible as cavity patterns</li>
+            <li><strong>Nether portal frames</strong> — visible at any height, often left behind after a player passes through</li>
+          </ul>
+
+          <h3>3. A Good Hacked Client</h3>
+          <p>Once you have identified a target area, your <a href="best-hacked-clients.html">hacked client</a> matters. Baritone (included with Impact client) can automate mining and pathfinding. X-ray mode lets you scan underground for chests or furnaces without digging blind. Safe walk and speed hacks reduce the risk of falling into traps.</p>
+
+          <h2 id="search-strategies">Search Strategies That Work</h2>
+
+          <h3>Highway-Near Stashes</h3>
+          <p>Most players build their first base within a few thousand blocks of a highway. This means the area within 500 blocks of any major highway axis is high-probability terrain. The <a href="highway-network.html">highway network guide</a> maps out the major routes. Focus your search on areas 5k-20k blocks from spawn along each highway axis — close enough to be accessible, far enough that players felt safe.</p>
+
+          <h3>Terrain Feature Stashes</h3>
+          <p>Players gravitate toward distinctive terrain features when choosing base locations. Mountains, islands, extreme hills, and unique cave systems are popular. Search these areas on the rendered map — a base hidden inside a mountain will show up as a cavity with unusual geometry.</p>
+
+          <h3>Abandoned Mega-Bases</h3>
+          <p>The most rewarding targets are not hidden stashes but abandoned mega-bases from bygone eras. Players who built huge projects in 2015-2019 are largely inactive. Their bases often remain fully stocked. Use the world download to locate famous build sites from <a href="famous-bases-events.html">the server's history</a> and check if they have been fully looted.</p>
+
+          <h3>Coordinate Leak Research</h3>
+          <p>Many 2B2T bases have had their coordinates leaked at some point — on Discord, Reddit, YouTube comments, or the 2B2T Wiki. Searching for these leaks is a legitimate stash hunting strategy. Common sources:</p>
+
+          <ul>
+            <li><strong>YouTube video descriptions</strong> — creators sometimes leak coordinates for content</li>
+            <li><strong>Discord servers</strong> — raiding groups share intel on active and abandoned bases</li>
+            <li><strong>Reddit r/2b2t</strong> — historical posts contain coords that are still valid today</li>
+            <li><strong>The 2B2T Wiki</strong> — historical base pages sometimes include coordinates or general location clues</li>
+          </ul>
+
+          <div class="callout">Coordinate research is often faster than blind map scanning. Spend 70% of your time researching and 30% actually traveling. The players who find the best stashes are the best researchers, not the best miners.</div>
+
+          <h2 id="what-to-look-for">What to Look For in a Promising Stash</h2>
+
+          <p>Not every abandoned base is worth the trip. Prioritize targets based on these indicators:</p>
+
+          <table class="stats-table">
+            <tr>
+              <th>Indicator</th>
+              <th>Signal</th>
+              <th>Why</th>
+            </tr>
+            <tr>
+              <td>Dense storage rooms</td>
+              <td>High value</td>
+              <td>Multiple double chests = bulk loot from dupe era</td>
+            </tr>
+            <tr>
+              <td>Bedrock-layer vault</td>
+              <td>Very high value</td>
+              <td>Serious players stored their best gear at bedrock</td>
+            </tr>
+            <tr>
+              <td>Nether roof access</td>
+              <td>High value</td>
+              <td>Indicates experienced player with transport hub access</td>
+            </tr>
+            <tr>
+              <td>Building date 2016-2019</td>
+              <td>Highest probability</td>
+              <td>Peak player activity era, many bases now abandoned</td>
+            </tr>
+            <tr>
+              <td>Dupe-era signs</td>
+              <td>High value</td>
+              <td>Large quantities of duped items may still be stored</td>
+            </tr>
+            <tr>
+              <td>Recent activity (past year)</td>
+              <td>Lower probability</td>
+              <td>Owner might still play. Higher risk of ambush</td>
+            </tr>
+          </table>
+
+          <h2 id="safety">Stash Hunting Safety</h2>
+
+          <p>Stash hunting carries real risks. Here is what to watch for:</p>
+
+          <ul>
+            <li><strong>Traps.</strong> Some players booby-trap their abandoned bases with withers, falling blocks, or lava dispensers. Always approach a new base carefully and scout from a distance with a hacked client's freecam or tracers.</li>
+            <li><strong>Ambushes.</strong> If a base looks like it was recently visited — fresh torches, recent block updates — the owner might be nearby or watching. Check with /msg or observe for chat activity before looting.</li>
+            <li><strong>Logout traps.</strong> Some players log out inside their base and log back in when they hear activity. Bring enough gear to survive a fight.</li>
+            <li><strong>Coordinate sharing.</strong> If you find a good stash, do not announce it in public chat. The base will be stripped within hours.</li>
+          </ul>
+
+          <h2 id="realistic-expectations">Realistic Expectations</h2>
+
+          <p>Stash hunting is not a guaranteed path to wealth. The most valuable stashes were found years ago. But there are still plenty of mid-tier stashes left — bases with a few double chests of enchanted gear, some dupe-era items, and building materials. Every month, players report finding untouched bases in the 100k-500k block range. The server is simply too large for every stash to have been found.</p>
+
+          <p>The 24TB world download released in 2025 opened up new hunting grounds. Many players who downloaded it focused on areas near spawn. The regions beyond 200k blocks from spawn are largely unexplored by modern stash hunters.</p>
+
+          <p>Treat stash hunting as a long-term project rather than a quick score. Document coordinates, share intel with trusted groups (our <a href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Discord</a> has research channels), and be patient. The next big find is out there — you just have to do the research to find it first.</p>
+
+          <h2 id="sources">Sources & Further Reading</h2>
+          <ul>
+            <li><a href="world-download-guide.html">2B2T World Download Guide</a></li>
+            <li><a href="how-to-download-2b2t-1m-world-map-release.html">24TB World Map Release Guide</a></li>
+            <li><a href="highway-network.html">2B2T Highway Network Guide</a></li>
+            <li><a href="famous-bases-events.html">Most Famous 2B2T Bases & Events</a></li>
+            <li><a href="base-security-guide.html">2B2T Base Security Guide</a></li>
+            <li><a href="best-hacked-clients.html">Best 2B2T Hacked Clients</a></li>
+            <li><a href="https://2b2t.miraheze.org/wiki/Mapping" target="_blank" rel="noreferrer">2B2T Wiki — Mapping</a></li>
+          </ul>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>70% research + 30% travel = successful stash hunting. The world download is your most powerful tool.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#why-stash-hunting-works">Why stash hunting works</a></li>
+            <li><a class="inline-link" href="#essential-tools">Essential tools</a></li>
+            <li><a class="inline-link" href="#search-strategies">Search strategies</a></li>
+            <li><a class="inline-link" href="#what-to-look-for">What to look for</a></li>
+            <li><a class="inline-link" href="#safety">Safety</a></li>
+            <li><a class="inline-link" href="#realistic-expectations">Realistic expectations</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Share stash leads, coordinate hunting expeditions, and compare world download findings.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Combine stash hunting with base security knowledge, travel skills, and world download tools.</p>
+        </div>
+        <div class="related-grid">
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">📥 How to Download & Use the 1TB 2B2T World Map</h3>
+            <p>A beginner-friendly guide to the 2B2T world download, including torrent basics, storage planning, map rendering, and practical offline use.</p>
+            <a class="card-link" href="../articles/world-download-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🛣️ 2B2T Highway Network: How to Travel Fast</h3>
+            <p>A travel guide to the 2B2T highway network, Nether routes, ice roads, coordinate logic, and how to move fast.</p>
+            <a class="card-link" href="../articles/highway-network.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🏰 2B2T Base Security: How to Not Get Found</h3>
+            <p>Understand base security from the builder's perspective — and learn how stash hunters defeat those defenses.</p>
+            <a class="card-link" href="../articles/base-security-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">⚡ Best 2B2T Hacked Clients (Free & Paid)</h3>
+            <p>Tools for efficient stash hunting: X-ray, Baritone pathfinding, freecam, and more.</p>
+            <a class="card-link" href="../articles/best-hacked-clients.html">Read Guide &rarr;</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> © 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  /**
+   * Toggles the navigation background based on the scroll position.
+   */
+  function updateNavigationState() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) {
+      return;
+    }
+
+    if (window.scrollY > 24) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  /**
+   * Connects the mobile navigation button with the menu panel.
+   */
+  function setupMobileNavigation() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var menu = document.querySelector('[data-nav-menu]');
+    if (!toggle || !menu) {
+      return;
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /**
+   * Starts all small UI behaviors after the DOM is ready.
+   */
+  function bootSiteUI() {
+    updateNavigationState();
+    setupMobileNavigation();
+    window.addEventListener('scroll', updateNavigationState, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
