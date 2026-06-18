@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch 2B2T Spawn in Real-Time: 0,0 Live Camera Website (2026) | 2B2T Guide</title>
+  <meta name="description" content="A community-built website now streams 2B2T spawn (0,0) in real-time using a bot. Learn how it works, why it crashed browsers, and what players are saying about this tool.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  <script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="../index.html">&larr; Back to Home</a>
+      <a href="how-to-leave-spawn.html">Beginner</a>
+      <a href="best-hacked-clients.html">Clients</a>
+      <a href="world-download-guide.html">Downloads</a>
+      <a href="base-security-guide.html">Base</a>
+      <a href="famous-bases-events.html">History</a>
+      <a href="survival-guide.html">Survival</a>
+      <a href="highway-network.html">Highways</a>
+      <a href="duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Tools</span>
+          <span>/</span>
+          <span>2B2T Spawn Live Camera</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Community Tools</span>
+          <h1 class="article-title">Watch 2B2T Spawn in Real-Time: The 0,0 Live Camera Website</h1>
+          <div class="article-meta">
+            <span>Published: June 18, 2026</span>
+            <span>Category: Tools</span>
+          </div>
+          <p>A community member built a website that streams a live camera feed of 2B2T spawn (0, 0, 0) 24/7 using a bot that stands at the exact world origin. The thread on r/2b2t racked up 412 upvotes and 38 comments in just a few days, making it one of the most popular community projects on the subreddit in mid-2026. This article explains how it works, what players have discovered using it, and why it is worth a bookmark.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="article-wrap">
+          <article class="article-body pixel-panel">
+
+          <h2 id="what-it-is">What Is the 2B2T Spawn Live Camera?</h2>
+
+          <p>The 2B2T spawn live camera is a community-built website that uses an alt account bot parked at coordinates 0, 0 on the 2B2T server. The bot continuously streams whatever it sees on screen to a web page that any player can open in their browser. Think of it as a free, 24/7 CCTV feed of the most chaotic spot in Minecraft — spawn on the oldest anarchy server.</p>
+
+          <p>The website displays the bot's first-person view, updated in near-real-time. You can watch players spawning in, dying to lava and fall damage, fighting each other, or simply being spawned on top of and killed instantly by the crowd already there. It is exactly as chaotic as you would expect.</p>
+
+          <div class="callout">Warning: The live feed can be resource-heavy. Multiple r/2b2t commenters reported that leaving the website open in a browser tab for too long crashed their browser and other apps due to memory usage ("OK forgot I had this website still open and it crashed my browser and other apps bc ram"). Watch at your own risk, and close the tab when you are done.</div>
+
+          <h2 id="how-it-works">How the Bot Works</h2>
+
+          <p>The live cam works by running a Minecraft bot account logged into 2B2T, positioned at the exact world spawn point. The bot uses a hacked client or bot framework that is capable of automatically reconnecting through the queue, managing the spawn chaos, and staying alive long enough to stream useful footage.</p>
+
+          <p>Given 2B2T's extreme conditions at spawn — constant lava, continuous PvP, and explosive traps — the bot dies frequently. But the system automatically reconnects and reposition itself. The result is a feed that is sometimes just a death screen, but often captures genuinely interesting moments.</p>
+
+          <p>As one r/2b2t commenter noted: "The bot is eternally dead, capturing what goes on around it." The half-joke captures the reality of trying to stay at 2B2T spawn voluntarily &mdash; the bot dies constantly, but that is itself a reflection of what spawn is actually like.</p>
+
+          <h2 id="why-interesting">Why Players Love It</h2>
+
+          <p>The live camera fills a gap that no 2B2T tool has covered before. Here is why the community embraced it so quickly:</p>
+
+          <ul>
+            <li><strong>Unfiltered spawn action.</strong> You can see exactly what is happening at spawn right now, without logging in and sitting through the queue yourself. It is the closest thing to a 2B2T livestream that runs 24/7.</li>
+            <li><strong>Find group activities.</strong> Some players reported using the camera to spot when a group of players was forming at spawn, then logging in to join the action without having to guess the timing.</li>
+            <li><strong>Server health indicator.</strong> If the bot is consistently getting killed faster than it can reconnect, it is a rough sign of how aggressive spawn is at that moment. If it is staying alive for longer stretches, the spawn is relatively quiet.</li>
+            <li><strong>Pure entertainment.</strong> Several commenters admitted to keeping the feed open as background entertainment &mdash; watching the chaos of 2B2T spawn like a nature documentary about digital destruction.</li>
+          </ul>
+
+          <h2 id="how-to-access">How to Access the Live Camera</h2>
+
+          <p>The original r/2b2t thread (dated May 26, 2026) contains the link to the live camera website. As of June 2026, it appears to still be running and maintained by the original creator. To find the current URL:</p>
+
+          <ol>
+            <li>Visit the <a href="https://www.reddit.com/r/2b2t/" target="_blank" rel="noreferrer">r/2b2t subreddit</a>.</li>
+            <li>Search for keywords like "live camera" or "watch 2b2t spawn real-time" to find the latest thread &mdash; the URL may have been updated since the original post.</li>
+            <li>Alternatively, join the 2B2T Guide Discord to get the current link from the community.</li>
+          </ol>
+
+          <div class="callout">Before you open it: close other memory-heavy tabs first. The live feed uses significant browser resources because of how it captures and transmits the game view. Multiple players confirmed that leaving it open for extended periods caused browser instability.</div>
+
+          <h2 id="what-you-can-see">What You Can See on the Feed</h2>
+
+          <p>Based on community reports from the Reddit thread, here is what the camera typically captures:</p>
+
+          <ul>
+            <li><strong>New players spawning and dying instantly.</strong> This is the most common sight. A fresh player appears, takes fall damage from the spawn platform, gets hit by a crystal, or is killed by a waiting player &mdash; all within seconds.</li>
+            <li><strong>Buildings and ruins.</strong> The area around 0, 0 is a constantly changing landscape of obsidian boxes, lava casts, cobblestone towers, and the ever-present destruction. The camera captures the shifting architecture of spawn.</li>
+            <li><strong>Crystal fights.</strong> Spawn PvP is relentless, and the camera often catches end crystal explosions and players hunting each other right at the origin point.</li>
+            <li><strong>Bot traffic.</strong> You can see other bots coming through spawn &mdash; some logging in just to die, others trying to make their way out along the highways.</li>
+            <li><strong>The quiet moments.</strong> Occasionally the bot survives for a minute or two of relative peace, giving you a rare look at a momentarily calm 2B2T spawn before the chaos resumes.</li>
+          </ul>
+
+          <h2 id="vs-other-tools">How It Compares to Other Spawn Tools</h2>
+
+          <p>The live camera is not the only tool for monitoring 2B2T spawn, but it fills a unique niche:</p>
+
+          <ul>
+            <li><strong>World downloads</strong> (like the 24TB map release) give you a static snapshot. Useful for scouting, but cannot show what is happening right now.</li>
+            <li><strong>In-game teleportation</strong> requires you to be on the server and travel to spawn yourself &mdash; which takes time and risks death.</li>
+            <li><strong>The live camera</strong> gives you real-time visibility with zero risk and no queue wait. It is the only way to check spawn conditions before deciding to log in.</li>
+          </ul>
+
+          <p>For players who use the camera to time their spawn runs, pairing it with our <a href="how-to-leave-spawn.html">spawn escape guide</a> and <a href="queue-wait-tips.html">queue tips</a> makes for an optimal spawn strategy.</p>
+
+          <h2 id="limitations">Known Limitations</h2>
+
+          <p>The live camera is impressive for a community project, but it has real constraints:</p>
+
+          <ul>
+            <li><strong>Bot reliability.</strong> The bot dies constantly. You will see a lot of death screens and waiting for reconnect. That is not a bug &mdash; it is an accurate reflection of spawn conditions.</li>
+            <li><strong>Browser performance.</strong> As noted above, the feed is resource-heavy. It is not designed to be left open indefinitely.</li>
+            <li><strong>No guarantee of uptime.</strong> This is a community project, not an official 2B2T tool. The bot could go down at any time if the creator stops maintaining it or if 2B2T updates break the bot's login method.</li>
+            <li><strong>Limited view.</strong> The camera captures only what is visible from one position. It misses spawn outer areas, highway entrances, and anything behind terrain or structures.</li>
+          </ul>
+
+          <h2 id="future">What Could Come Next</h2>
+
+          <p>The success of the spawn live camera raises interesting possibilities for future 2B2T community tools:</p>
+
+          <ul>
+            <li><strong>Multiple camera positions</strong> placed at different spawn coordinates or key highway intersections, giving a more complete picture of server activity.</li>
+            <li><strong>An archive or highlight system</strong> that captures notable moments automatically &mdash; player kills, crystal explosions, or unusual builds appearing at spawn.</li>
+            <li><strong>A combined tool</strong> that pairs the live camera with the 2B2T world download, letting you compare what spawn looks like in real-time against its state in the latest map data.</li>
+          </ul>
+
+          <p>For now, the single camera feed is a memorable addition to the 2B2T tool landscape. It is both a genuinely useful monitoring tool and a reminder that the spawn area is still exactly as chaotic and hostile as it has always been.</p>
+
+          <h2 id="sources">Sources & Further Reading</h2>
+          <ul>
+            <li><a href="https://www.reddit.com/r/2b2t/comments/1to2d5y/watch_2b2t_00_in_realtime_from_a_website/" target="_blank" rel="noreferrer">Original r/2b2t Thread — "Watch 2b2t 0,0 in real-time from a website" (412 upvotes)</a></li>
+            <li><a href="how-to-leave-spawn.html">How to Leave 2B2T Spawn (2026 Guide)</a></li>
+            <li><a href="world-download-guide.html">2B2T World Download Guide</a></li>
+            <li><a href="queue-wait-tips.html">2B2T Queue & Wait Time Tips</a></li>
+            <li><a href="stash-hunting-guide.html">2B2T Stash Hunting Guide</a></li>
+          </ul>
+
+          </article>
+          <aside class="article-sidebar pixel-panel">
+            <span class="sidebar-label">Quick Facts</span>
+            <p>A community bot at 0,0 streams spawn live to a website. 412 upvotes on r/2b2t in May 2026.</p>
+            <h3>On This Page</h3>
+            <ul class="toc-list">
+              <li><a class="inline-link" href="#what-it-is">What is it</a></li>
+              <li><a class="inline-link" href="#how-it-works">How the bot works</a></li>
+              <li><a class="inline-link" href="#why-interesting">Why players love it</a></li>
+              <li><a class="inline-link" href="#how-to-access">How to access it</a></li>
+              <li><a class="inline-link" href="#what-you-can-see">What you can see</a></li>
+              <li><a class="inline-link" href="#vs-other-tools">How it compares</a></li>
+              <li><a class="inline-link" href="#limitations">Known limitations</a></li>
+              <li><a class="inline-link" href="#future">What could come next</a></li>
+            </ul>
+            <h3 style="margin-top: 28px;">Join our Discord</h3>
+            <p>Get the current live camera link and share your spawn observations with the community.</p>
+            <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Combine the live camera with these practical guides for a smarter spawn strategy.</p>
+        </div>
+        <div class="related-grid">
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔥 How to Leave 2B2T Spawn (2026 Guide)</h3>
+            <p>A practical 2B2T spawn guide covering route choice, supplies, death resets, and surviving the first hostile kilometers.</p>
+            <a class="card-link" href="how-to-leave-spawn.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">⏳ How to Skip 2B2T Queue & Wait Time Tips</h3>
+            <p>Priority tricks, timing strategies, queue-skipping tools, and what actually works for getting into the server faster.</p>
+            <a class="card-link" href="queue-wait-tips.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🗺️ 24TB 2B2T World Map: Download the 1M Release</h3>
+            <p>A fan team mapped 24TB of 2b2t data covering 1Mx1M chunks. The largest Minecraft world archive ever.</p>
+            <a class="card-link" href="how-to-download-2b2t-1m-world-map-release.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🎯 2B2T Stash Hunting: Find Hidden Bases & Old Stashes</h3>
+            <p>Learn stash hunting techniques: world downloads, map rendering, terrain analysis, coordinate leaks, and search strategies.</p>
+            <a class="card-link" href="stash-hunting-guide.html">Read Guide &rarr;</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> © 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, r/2b2t community discussions, player reports, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  /**
+   * Toggles the navigation background based on the scroll position.
+   */
+  function updateNavigationState() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) {
+      return;
+    }
+
+    if (window.scrollY > 24) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  /**
+   * Connects the mobile navigation button with the menu panel.
+   */
+  function setupMobileNavigation() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var menu = document.querySelector('[data-nav-menu]');
+    if (!toggle || !menu) {
+      return;
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /**
+   * Starts all small UI behaviors after the DOM is ready.
+   */
+  function bootSiteUI() {
+    updateNavigationState();
+    setupMobileNavigation();
+    window.addEventListener('scroll', updateNavigationState, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
