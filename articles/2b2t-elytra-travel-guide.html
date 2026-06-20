@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use Elytra on 2B2T (2026 Guide) | 2B2T Guide</title>
+  <meta name="description" content="How to get and use elytra on 2B2T in 2026. Compare elytra travel vs highway ice roads, firework management, and survival tips for flying on the anarchy server.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="/index.html">&larr; Back to Home</a>
+      <a href="/articles/how-to-leave-spawn.html">Beginner</a>
+      <a href="/articles/best-hacked-clients.html">Clients</a>
+      <a href="/articles/world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="/articles/famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="/articles/highway-network.html">Highways</a>
+      <a href="/articles/duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>&#129412; How to Use Elytra on 2B2T: Modern Travel Guide (2026)</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Travel Strategy</span>
+          <h1 class="article-title">&#129412; How to Use Elytra on 2B2T: Modern Travel Guide (2026)</h1>
+          <p class="muted">Learn how to get and use elytra on 2B2T in 2026. Compare elytra travel vs highway ice roads, find fireworks, and survive flight on Minecraft's oldest anarchy server. Covers firework crafting and safety tips.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t elytra, 2b2t flight guide, 2b2t travel</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="/images/2b2t-highway-travel.png" alt="2B2T guide article illustration of terrain and travel routes" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+          
+          
+          <p>For years, the accepted wisdom on 2B2T was "build a boat, take the Nether highway, and never look back." The highway network is still the safest way to travel, but it is no longer the fastest. In 2026, 2B2T supports elytra flight, and players who master it can traverse thousands of blocks in minutes.</p>
+
+          <p>The catch? Getting an elytra on 2B2T is not as simple as looting an End ship. Fireworks are scarce. And flying in open air makes you visible to anyone with a render distance slider. This guide covers the practical side of elytra travel on 2B2T the parts that normal Minecraft tutorials skip.</p>
+
+          <h2 id="does-2b2t-have-elytra">Does 2B2T Have Elytra in 2026?</h2>
+
+          <p>Yes. 2B2T runs on a modified version of Minecraft that includes elytra mechanics. The server has been updated through several Minecraft versions over the years, and elytra introduced in Minecraft 1.9 (2016) are available. However, the End on 2B2T has been thoroughly looted. The End ships that normally generate with elytra loot chests are long gone, and natural elytra generation does not refresh.</p>
+
+          <p>This means the only reliable way to get an elytra on 2B2T is through <strong>player trading, stash hunting, or duplication leftovers</strong>. See the <a class="inline-link" href="/articles/duplication-glitches.html">duplication guide</a> for context on how elytra entered the economy.</p>
+
+          <div class="key-tip">
+            <strong>Key insight:</strong> Elytra on 2B2T are not renewable in the traditional sense. The supply comes from early-game duplication periods before patching. This makes elytra a finite resource and a valuable trade item. Do not expect to find one in an End ship.
+          </div>
+
+          <h2 id="how-to-get-elytra">How to Get Elytra on 2B2T</h2>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Method</th><th>Difficulty</th><th>Risk</th><th>Likelihood</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Trade with another player</td><td>Easy</td><td>Scams, ambushes</td><td>High (if you have items to trade)</td></tr>
+              <tr><td>Find in stashes</td><td>Medium</td><td>Time investment</td><td>Medium elytra are in old stashes</td></tr>
+              <tr><td>Acquire from group or alliance</td><td>Medium</td><td>Trust needed</td><td>Medium depends on connections</td></tr>
+              <tr><td>Get lucky at spawn</td><td>Hard</td><td>Extreme</td><td>Low players rarely drop elytra</td></tr>
+            </tbody>
+          </table>
+
+          <p>Trading with other players is the most reliable path. Elytra prices fluctuate, but expect to trade roughly equivalent to a full set of prot IV diamond armor. If trading is not an option, try <a class="inline-link" href="/articles/2b2t-stash-hunting-guide.html">stash hunting</a> many old bases from the 1.9-1.12 era contain elytra in their chest rooms.</p>
+
+          <h2 id="elytra-vs-highway">Elytra Travel vs Highway Ice Roads: Which Is Faster?</h2>
+
+          <p>The short answer: elytra is faster in open terrain, but highways are safer and more reliable.</p>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Factor</th><th>Elytra Flight</th><th>Highway Ice Roads</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Speed (blocks/sec)</td><td>20-40 (with fireworks)</td><td>10-15 (boat on ice)</td></tr>
+              <tr><td>Gear needed</td><td>Elytra + fireworks + backup armor</td><td>Boat + food + light armor</td></tr>
+              <tr><td>Visibility to enemies</td><td>Very visible in open air</td><td>Hidden underground</td></tr>
+              <tr><td>Firework cost per 10k blocks</td><td>~30-40 fireworks</td><td>0 (just hunger)</td></tr>
+              <tr><td>Fit for long hauls (100k+)</td><td>Fast but expensive</td><td>Slow but sustainable</td></tr>
+            </tbody>
+          </table>
+
+          <p>Realistically, experienced players use both. Elytra for the first 10-50 thousand blocks from spawn (fast escape), then switch to highway ice roads for safe long-distance travel. See <a class="inline-link" href="/articles/highway-network.html">highway network guide</a> for highway navigation.</p>
+
+          <h2 id="fireworks-and-durability">Fireworks and Durability Management</h2>
+
+          <p>Fireworks are the fuel for elytra flight, and on 2B2T they are not abundant. Gather gunpowder from creepers at night, paper from sugar cane near rivers, and craft flight duration 3 fireworks (3 gunpowder + 1 paper) for maximum flight time per rocket. Carry <strong>Unbreaking III</strong> elytra (extends life to ~15 minutes) and <strong>Mending</strong> books to repair with XP.</p>
+
+          <h2 id="risks-of-flying">Risks of Flying on 2B2T</h2>
+
+          <ul>
+            <li><strong>Visible from far away.</strong> Elytra particles are visible to any player with render distance 8+. Fly at night or use invisibility potions near spawn.</li>
+            <li><strong>Rocket exhaustion.</strong> Running out of fireworks mid-flight at 50k blocks is a death sentence. Always carry 2-3x the fireworks you think you need.</li>
+            <li><strong>Elytra breakage.</strong> If your elytra breaks mid-flight, you take full fall damage. Carry a water bucket for emergency landings.</li>
+            <li><strong>Lag and rubberbanding.</strong> 2B2T has lag spikes. Fly with a buffer height of at least 50 blocks above terrain.</li>
+            <li><strong>Traps at popular coordinates.</strong> Some players set up traps at common elytra destinations. Scout your landing zone before touching down.</li>
+          </ul>
+
+          <h2 id="elytra-exploration-tips">Tips for Elytra-Based Exploration</h2>
+
+          <p>Use elytra to scan terrain for unnatural patterns at Y=200+. Mark waypoints with your client system (Future, Impact, and Wurst support it). Fly along Nether highway overlay lines on the surface to spot bases built near exits. Team flights split rocket costs. For surface-level navigation, also read <a class="inline-link" href="/articles/survival-guide.html">survival guide</a> and the <a class="inline-link" href="/articles/world-download-guide.html">world download guide</a> for offline scouting.</p>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>Elytra is faster but costly. Use hybrid travel: fly away from spawn, then highway ice roads for distance.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#does-2b2t-have-elytra">Does 2B2T have elytra?</a></li>
+            <li><a class="inline-link" href="#how-to-get-elytra">How to get elytra</a></li>
+            <li><a class="inline-link" href="#elytra-vs-highway">Elytra vs highway</a></li>
+            <li><a class="inline-link" href="#fireworks-and-durability">Fireworks &amp; durability</a></li>
+            <li><a class="inline-link" href="#risks-of-flying">Risks of flying</a></li>
+            <li><a class="inline-link" href="#elytra-exploration-tips">Exploration tips</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss guides, ask questions, and connect with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Explore more guides to master Minecraft's oldest anarchy server.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128739; 2B2T Highway Network: How to Travel Fast</h3>
+            <p>Full guide to the Nether highway system, ice roads, and coordinate navigation for ground travel on 2B2T.</p>
+            <a class="card-link" href="/articles/highway-network.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#129386; 2B2T Survival Guide: Food, Tools and First Base</h3>
+            <p>Secure your survival infrastructure before you invest in elytra flight. Flying without a base is risky.</p>
+            <a class="card-link" href="/articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#9889; Best 2B2T Hacked Clients (Free &amp; Paid)</h3>
+            <p>Clients with waypoint systems and elytra flight assists make air travel practical and efficient.</p>
+            <a class="card-link" href="/articles/best-hacked-clients.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#127991; 2B2T Base Security: How to Not Get Found</h3>
+            <p>If you are flying to a new base location, make sure it stays hidden from the ground and from the air.</p>
+            <a class="card-link" href="/articles/base-security-guide.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() { var nav = document.querySelector('.site-nav'); if (!nav) { return; } if (window.scrollY > 24) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+  function setupMobileNavigation() { var toggle = document.querySelector('[data-nav-toggle]'); var menu = document.querySelector('[data-nav-menu]'); if (!toggle || !menu) { return; } toggle.addEventListener('click', function () { var isOpen = menu.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); }); menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }); }); }
+  function bootSiteUI() { updateNavigationState(); setupMobileNavigation(); window.addEventListener('scroll', updateNavigationState, { passive: true }); }
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Economy: Trading & Donor Items (2026) | 2B2T Guide</title>
+  <meta name="description" content="How the 2B2T economy works in 2026: donor items, player shops, trading etiquette, duplication impact, and essential safety tips for new players and traders.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="/index.html">&larr; Back to Home</a>
+      <a href="/articles/how-to-leave-spawn.html">Beginner</a>
+      <a href="/articles/best-hacked-clients.html">Clients</a>
+      <a href="/articles/world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="/articles/famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="/articles/highway-network.html">Highways</a>
+      <a href="/articles/duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>&#128176; 2B2T Economy Guide: Trading, Donor Items and Player Shops (2026)</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Economy &amp; Trading</span>
+          <h1 class="article-title">&#128176; 2B2T Economy Guide: Trading, Donor Items and Player Shops (2026)</h1>
+          <p class="muted">Understand how the 2B2T economy works in 2026. Learn about donor items, player shops, trading etiquette, and how item duplication shaped the server's economic landscape. Includes scam safety tips for new traders.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t economy, 2b2t trading, 2b2t donor items</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="/images/2b2t-highway-travel.png" alt="2B2T guide article illustration of terrain and travel routes" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+          
+          
+          <p>New players landing on 2B2T often ask: "Is there an economy on this server?" The answer is yes, but it looks nothing like the economy of a normal Minecraft server. There are no NPC villagers that trade reliably, no auction house plugin, and no currency system enforced by the server software. The 2B2T economy is entirely player-driven and it operates on trust, reputation, and a careful understanding of what items actually hold value.</p>
+
+          <p>This guide explains how the 2B2T economy works in 2026: what donor perks are, how player trading happens, which items are valuable, and how to avoid getting scammed.</p>
+
+          <h2 id="does-2b2t-have-economy">Does 2B2T Have an Economy?</h2>
+
+          <p>Yes but it is informal. The 2B2T economy is built on three pillars: <strong>donor perks</strong> (priority queue access, /kill commands, colored names), <strong>item scarcity</strong> (elytra, god-tier enchanted books, Netherite upgrades), and <strong>duplication legacy</strong> (prot IV diamond armor, totems, shulker boxes that were duplicated during past glitches and now form the base of the economy).</p>
+
+          <div class="key-tip">
+            <strong>Key insight:</strong> There is no in-game currency on 2B2T. Prot IV diamond armor sets function as the de facto currency. A "set" (helmet + chestplate + leggings + boots, all Protection IV) is the standard unit of trade, much like a dollar bill.
+          </div>
+
+          <h2 id="donor-perks-priority">Donor Perks and Priority Queue</h2>
+
+          <p>Donating to 2B2T grants perks that directly affect gameplay. The most valuable is <strong>priority queue</strong> the ability to skip the regular queue during peak hours (1-3 hour waits in 2026). Other perks include the /kill command, colored chat name, and access to donor-only Discord channels. Donor perks are account-bound and cannot be directly traded, but donors can offer services like using /kill to help other players. See <a class="inline-link" href="/articles/queue-wait-tips.html">queue tips guide</a> for queue minimization strategies.</p>
+
+          <h2 id="player-trading">How Player Trading Actually Works</h2>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Method</th><th>Safety</th><th>Convenience</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>In-person trade</td><td>High risk</td><td>Fast</td></tr>
+              <tr><td>Discord trade</td><td>Medium risk</td><td>Slow</td></tr>
+              <tr><td>Reputation-based trade</td><td>Lower risk</td><td>Medium</td></tr>
+              <tr><td>Stash drop</td><td>Trust-dependent</td><td>Asynchronous</td></tr>
+            </tbody>
+          </table>
+
+          <p>In-person trading is most common but also most dangerous. Trade in neutral locations, not at either party's base. Use a random coordinate far from spawn, arrive separately, and leave immediately after the trade completes.</p>
+
+          <h2 id="valuable-items">What Items Hold Value on 2B2T</h2>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Tier</th><th>Items</th><th>Trade Value (in prot IV sets)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Premium</td><td>Elytra, God Apples, Netherite Upgrade Templates</td><td>5-10+ sets</td></tr>
+              <tr><td>High</td><td>Prot IV Netherite Armor, Sharpness V Books, Totems</td><td>1-3 sets</td></tr>
+              <tr><td>Standard</td><td>Prot IV Diamond Armor, Enchanted Tools, Shulker Boxes</td><td>1 set</td></tr>
+              <tr><td>Low</td><td>Diamonds, Iron Blocks, Food Stacks</td><td>Bulk only</td></tr>
+              <tr><td>Bulk</td><td>Cobblestone, Dirt, Wood, Glass</td><td>Worthless in trade</td></tr>
+            </tbody>
+          </table>
+
+          <h2 id="duplication-factor">The Duplication Factor in the Economy</h2>
+
+          <p>Over 2B2T's history, multiple dupe methods have emerged and been patched. Each wave of duplication flooded the economy with specific items. Items that were heavily duplicated (prot IV gear, shulker boxes, totems) are abundant and form the base of the economy. Items never successfully duplicated (elytra before certain patches, god apples) remain scarce. If a new dupe glitch is discovered, the value of the duplicated item drops to near zero overnight. See <a class="inline-link" href="/articles/duplication-glitches.html">duplication guide</a> for full history.</p>
+
+          <h2 id="scams-trading-safety">Scams, Trust, and Trading Safety</h2>
+
+          <p>Scams are endemic to 2B2T trading. The anarchy nature means no admin enforcement and no dispute resolution. Common scam patterns: the switcheroo (items swapped at the last second), the ambush trade (enemies waiting at trade location), the middleman scam (fake trusted third party), and the duped item scam (items from active dupe get rolled back). Safety principles: never trade more than you can afford to lose, trade small and often, use a burn account (separate from your main base), and screenshot all trade conversations.</p>
+
+          <p>Advanced traders sell <strong>kits</strong> pre-assembled sets in shulker boxes: PvP starter kits, base building kits, and travel kits. Kit convenience commands a premium of 1.5-2x individual item value. Also see <a class="inline-link" href="/articles/2b2t-stash-hunting-guide.html">stash hunting guide</a> for an alternative to trading.</p>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>Prot IV diamond armor is 2B2T's de facto currency. Never trade more than you can afford to lose.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#does-2b2t-have-economy">Does 2B2T have an economy?</a></li>
+            <li><a class="inline-link" href="#donor-perks-priority">Donor perks &amp; priority queue</a></li>
+            <li><a class="inline-link" href="#player-trading">Player trading</a></li>
+            <li><a class="inline-link" href="#valuable-items">Valuable items</a></li>
+            <li><a class="inline-link" href="#duplication-factor">Duplication factor</a></li>
+            <li><a class="inline-link" href="#scams-trading-safety">Scams &amp; safety</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss guides, ask questions, and connect with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Explore more guides to master Minecraft's oldest anarchy server.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128257; 2B2T Duplication Glitches: History &amp; Current Status</h3>
+            <p>Understand how dupe waves shaped item values and why some items are abundant while others are incredibly rare.</p>
+            <a class="card-link" href="/articles/duplication-glitches.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#9203; How to Skip 2B2T Queue &amp; Wait Time Tips</h3>
+            <p>Priority queue is the most valuable donor perk. Learn how the queue works and minimize your wait time.</p>
+            <a class="card-link" href="/articles/queue-wait-tips.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#127919; 2B2T Stash Hunting: Find Hidden Bases &amp; Stashes</h3>
+            <p>Stash hunting is an alternative to trading. Find old bases and claim abandoned loot without spending a thing.</p>
+            <a class="card-link" href="/articles/2b2t-stash-hunting-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#9889; Best 2B2T Hacked Clients (Free &amp; Paid)</h3>
+            <p>Client features like chest ESP and freecam are valuable tools for stash traders looking to verify inventory.</p>
+            <a class="card-link" href="/articles/best-hacked-clients.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() { var nav = document.querySelector('.site-nav'); if (!nav) { return; } if (window.scrollY > 24) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+  function setupMobileNavigation() { var toggle = document.querySelector('[data-nav-toggle]'); var menu = document.querySelector('[data-nav-menu]'); if (!toggle || !menu) { return; } toggle.addEventListener('click', function () { var isOpen = menu.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); }); menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }); }); }
+  function bootSiteUI() { updateNavigationState(); setupMobileNavigation(); window.addEventListener('scroll', updateNavigationState, { passive: true }); }
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
