@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Map Art Tutorial: Create and Protect on Anarchy Server</title>
+  <meta name="description" content="Create and protect map art on 2B2T. Covers MapartCraft, Litematica schematics, safe placement strategies, grief prevention, and the server map art culture.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="/index.html">&larr; Back to Home</a>
+      <a href="/articles/how-to-leave-spawn.html">Beginner</a>
+      <a href="/articles/best-hacked-clients.html">Clients</a>
+      <a href="/articles/world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="/articles/famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="/articles/highway-network.html">Highways</a>
+      <a href="/articles/duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>&#127912; 2B2T Map Art Guide: Create & Protect Map Art on the Anarchy Server</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Creativity on the Anarchy Server</span>
+          <h1 class="article-title">&#127912; 2B2T Map Art Guide: Create &amp; Protect Map Art on the Anarchy Server</h1>
+          <p class="muted">Learn how to create and protect map art on 2B2T in 2026. Covers tool selection, mapart generator programs, safe placement strategies, grief countermeasures, and the cultural history of map art on Minecraft's oldest anarchy server.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Published: June 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t map art, 2b2t mapart tutorial, 2b2t art guide</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="/images/2b2t-mapart-guide.png" alt="2B2T map art guide illustration showing colorful map art banners displayed across a dark anarchy server landscape, with pixel art designs in red, blue, green, and orange blocks" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+          
+          <p>Map art is one of the most visible creative expressions on 2B2T. Across the server's survival world, players have built massive pixel art pieces spanning hundreds of map tiles - everything from portraits of internet memes to political statements and faithful reproductions of famous paintings. Unlike normal Minecraft servers where map art is a casual hobby, on 2B2T it comes with survival stakes: griefers, coordinate leaks, and the constant risk of losing months of work.</p>
+
+          <p>This guide covers the complete process of creating map art on 2B2T in 2026. Whether you want to build a small personal banner or a multi-tile mural visible on the server map, you will learn which tools work on 2B2T right now, how to place your art safely, and what to do when someone finds your project.</p>
+
+          <h2 id="what-is-map-art">What Is Map Art on 2B2T?</h2>
+
+          <p>Map art on 2B2T works the same way as in vanilla Minecraft. A map item in the game renders an overhead view of the terrain it covers, at a scale of 1 pixel per block for the smallest zoom level. By placing colored blocks on a flat canvas - usually at Y=256 or Y=63 in a plains biome - players can build images that the map renders as a custom picture. The map item itself becomes a displayable piece of art that can be framed, traded, or stored.</p>
+
+          <p>On 2B2T, map art is more than decoration. Players use it to mark territory, leave messages, commemorate events, and even create directional signs that only show on the map. The famous 2B2T spawn area has been overlaid with hundreds of map art tiles placed by different groups and individuals, creating a chaotic collage that changes every few months as old pieces get broken and new ones appear.</p>
+
+          <p>One important distinction on 2B2T: locator maps show player positions but are harder to keep secret, while normal (non-locator) maps hide player dots and are safer for sensitive builds. Most map artists on 2B2T use non-locator maps to avoid drawing attention to their artwork's location.</p>
+
+          <h2 id="what-tools-do-you-need">What Tools Do You Need for 2B2T Map Art</h2>
+
+          <p>Creating map art on 2B2T requires both planning tools outside the game and execution tools inside it. Here is what you need to get started.</p>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Tool</th><th>Purpose</th><th>How to Get It</th><th>Difficulty</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>MapartCraft</td><td>Image-to-map conversion, calculates block palette</td><td>Free download (Windows/Mac/Linux)</td><td>Easy</td></tr>
+              <tr><td>Litematica</td><td>In-game schematic overlay for block-by-block placement</td><td>Fabric client mod (single-player or on an alt server)</td><td>Medium</td></tr>
+              <tr><td>Schematica (older)</td><td>Alternative to Litematica for 1.12 era clients</td><td>Part of older hacked client bundles</td><td>Medium</td></tr>
+              <tr><td>Flat platform builder</td><td>Clears a flat canvas for your map art on 2B2T</td><td>Hacked client (WorldEdit-type tools or baritone)</td><td>Hard</td></tr>
+              <tr><td>Non-locator map</td><td>Creates a map that hides player dots</td><td>Crafted with 8 paper + 1 compass (then remove compass)</td><td>Easy</td></tr>
+            </tbody>
+          </table>
+
+          <p><strong>MapartCraft</strong> is the most popular standalone tool. You load any image into it and it outputs a block-by-block blueprint showing exactly which wool, concrete, or terracotta blocks to place, organized by color. It automatically respects Minecraft's limited color palette - there are only about 40 distinct block colors that render differently on a map, so good map art design starts with choosing or designing images that work within those constraints.</p>
+
+          <p><strong>Litematica</strong> is the preferred in-game helper for large projects. You build your design in creative mode on a local single-player world or a private server, save it as a Litematica schematic, then load the schematic overlay on 2B2T to place blocks one by one. This is safer than trying to build from a printed reference while watching for griefers.</p>
+
+          <div class="callout">
+            <strong>Safety tip:</strong> Never build your map art in real time on 2B2T from a screenshot alone. Always pre-design in single-player first, then load the Litematica overlay. The time you save in planning is time you are not exposed to players passing through your build area.
+          </div>
+
+          <h2 id="choosing-a-location">Choosing a Location for Your Map Art</h2>
+
+          <p>Location is the most critical decision in 2B2T map art. A good location means your art survives for months or years. A bad location means it gets griefed within hours. Here are the factors to consider.</p>
+
+          <p><strong>Distance from spawn.</strong> Any map art within 10,000 blocks of spawn will attract attention. Players exploring outward frequently stumble into low-distance builds. At 30,000-100,000 blocks out, the risk drops significantly. Beyond 500,000 blocks, your main problem becomes the logistics of getting there rather than active griefing.</p>
+
+          <p><strong>Avoid highways and common routes.</strong> The Nether highway exits and the Overworld lines above them are heavily traveled. Build your map art at least 2,000 blocks away from any known highway axis. See the <a class="inline-link" href="/articles/highway-network.html">highway network guide</a> for exact axis coordinates to avoid.</p>
+
+          <p><strong>Terrain selection.</strong> Plains biomes at Y=63 are ideal because the natural grass color helps blank areas of your map. If you build at Y=256 on a platform, the background renders as sky blue, which can either help or hurt depending on your design. Mountain biomes and ocean areas create unwanted color noise in the map render.</p>
+
+          <p><strong>Establish a survival foothold first.</strong> Do not start building map art without a hidden base nearby. You need to store wool, concrete, terracotta, and tools within easy travel distance. A secure base with an ender chest lets you batch-carry materials without exposing your supply chain. If you have not yet built a safe perimeter, read the <a class="inline-link" href="/articles/base-security-guide.html">base security guide</a> first.</p>
+
+          <h2 id="placing-blocks">How to Place Blocks for Map Art on 2B2T</h2>
+
+          <p>Once your location is chosen and your schematic is ready, follow these placement rules for a clean render.</p>
+
+          <h3>Understanding the Map Grid</h3>
+          <p>Each map tile on 2B2T covers a 128 x 128 block area at the smallest zoom level. The tile boundaries are aligned to chunk borders. For example, the tile containing spawn (0, 0) covers blocks from x=-64 to x=63 and z=-64 to z=63. Place your art so all blocks fall within a single map tile, or plan for seamless multi-tile artwork by mapping out neighboring tile boundaries in advance.</p>
+
+          <h3>Block Color Palette</h3>
+          <p>Not all blocks render on a map. The usable palette includes wool (16 colors), concrete (16 colors), terracotta (16 colors), plus a few special blocks like obsidian (dark purple-brown). White wool reads as white on the map. Blue concrete reads as a strong blue. Black wool reads as near-black. MapartCraft shows exactly which blocks to use for each pixel of your design. Follow its output precisely - even one wrong block type can make a pixel look washed out on the final map render.</p>
+
+          <h3>Building in Layers</h3>
+          <p>Build your canvas from the bottom up. Place the background color first (often white wool or light gray concrete), then overlay the design blocks. This prevents gaps where the underlying terrain bleeds through. For multi-tile pieces, build each tile one at a time and check the map item after each tile completes before moving to the next one.</p>
+
+          <h2 id="grief-protection">Grief Protection for Map Art</h2>
+
+          <p>On 2B2T, map art is constantly at risk of destruction. Here are the countermeasures that experienced map artists use.</p>
+
+          <ul>
+            <li><strong>Lava and water defenses.</strong> Build a perimeter ditch two blocks deep around your canvas. Fill it with lava so approaching griefers take damage before reaching the art.</li>
+            <li><strong>Obsidian borders.</strong> Frame your map art with a one-block-thick obsidian wall. Obsidian takes longer to break, and most casual griefers skip obsidian-protected builds.</li>
+            <li><strong>Hide the map origin.</strong> The map item's center coordinate is stored in the item data. Never carry the finished map item in your hotbar near your base. Use an ender chest or a secondary stash to store map items.</li>
+            <li><strong>Decoy builds.</strong> Experienced players sometimes build a small visible art piece near a major highway to attract griefers away from the real artwork, which is placed miles away in a less obvious location.</li>
+            <li><strong>Leverage the world download.</strong> If your art gets destroyed, you can reconstruct it offline using the <a class="inline-link" href="/articles/world-download-guide.html">world download</a>. The 1M x 1M map release captures the state of the server at a point in time, preserving your map art in a snapshot even if it is broken in-game.</li>
+          </ul>
+
+          <h2 id="famous-works">Famous 2B2T Map Art Works and Their Stories</h2>
+
+          <p>Some map art pieces on 2B2T have become legendary. The "Last American Virgin" mural near spawn was one of the first large-scale map art projects and survived for years before being griefed. The "Valkyria" civilization built an entire city where every building had framed map art interiors. Player-made maps showing the coordinates of hidden bases have changed hands for real money and valuable in-game items.</p>
+
+          <p>The most famous single map art piece on 2B2T is the massive portrait of a popular streamer built by the 2b2t Builders community near the 100k mark. It covers 16 map tiles in a 4x4 grid and required over 200,000 blocks of wool and concrete. It survived for 18 months before being partially griefed after a coordinate leak on Reddit. This story illustrates the fundamental challenge of map art on 2B2T: no matter how well you build, the clock is always ticking until someone finds it.</p>
+
+          <h2 id="multiplayer-tips">Tips for Group Map Art Projects</h2>
+
+          <p>Working with a team on map art changes the risk profile significantly. A group can build faster and spot threats earlier, but the expanded communication surface means more opportunities for coordinate leaks.</p>
+
+          <ul>
+            <li>Only share exact coordinates with players you have played with for at least six months on the server.</li>
+            <li>Use encrypted chat channels (Discord DMs, not server chat) for coordinate discussion.</li>
+            <li>Assign one player as the materials runner who shuttles blocks from a distant stash to the build site, while others place blocks.</li>
+            <li>Build in shifts so the project never sits dormant with half-placed blocks visible on the map render.</li>
+            <li>Have a contingency plan for rapid grief response - know where extra materials are stored so you can repair quickly.</li>
+          </ul>
+
+          <h2 id="rendering-and-sharing">Rendering and Sharing Your Map Art</h2>
+
+          <p>After your map art is complete and placed, the real reward is seeing it on the server map. Use the world download tools covered in the <a class="inline-link" href="/articles/how-to-download-2b2t-1m-world-map-release.html">1M map release guide</a> to render your tiles in high resolution. Tools like Overviewer and MapRend can stitch individual map tiles into a single panoramic image of your artwork. Many players upload their completed map art to Reddit or the 2B2T Discord as proof of their work. Just remember - posting any image that includes your tile coordinates effectively signs the destruction order for your art.</p>
+
+          <p>If you want to share your art without compromising its location, crop the image to show only the artwork itself and strip any location clues from the metadata before uploading.</p>
+
+          <div class="callout">
+            <strong>Final thought:</strong> Map art on 2B2T is a statement. It says you were here, you built something, and you accepted the risk that it would not last forever. That is the spirit of the server. Build something worth remembering, protect it as best you can, and when it falls, build something better next time.
+          </div>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>Use non-locator maps for sensitive builds. Pre-design in single-player. Build far from highways. Assume your art will eventually be found.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#what-is-map-art">What is map art?</a></li>
+            <li><a class="inline-link" href="#what-tools-do-you-need">Tools you need</a></li>
+            <li><a class="inline-link" href="#choosing-a-location">Choosing a location</a></li>
+            <li><a class="inline-link" href="#placing-blocks">Placing blocks</a></li>
+            <li><a class="inline-link" href="#grief-protection">Grief protection</a></li>
+            <li><a class="inline-link" href="#famous-works">Famous works</a></li>
+            <li><a class="inline-link" href="#multiplayer-tips">Group tips</a></li>
+            <li><a class="inline-link" href="#rendering-and-sharing">Rendering &amp; sharing</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss guides, ask questions, and connect with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Explore more guides to master Minecraft's oldest anarchy server.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128737; 2B2T Base Security: How to Not Get Found</h3>
+            <p>Protect your map art build site and your material stashes with proper base security measures designed for anarchy conditions.</p>
+            <a class="card-link" href="/articles/base-security-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128205; 2B2T Stash Hunting: Find Hidden Bases &amp; Old Stashes</h3>
+            <p>Use stash hunting techniques to find old map art materials left in abandoned bases, or learn how stash hunters might find your own art.</p>
+            <a class="card-link" href="/articles/2b2t-stash-hunting-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128230; How to Download &amp; Use the 1TB 2B2T World Map</h3>
+            <p>Full guide to downloading and rendering the 2B2T world map so you can view your completed map art at high resolution offline.</p>
+            <a class="card-link" href="/articles/world-download-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128666; 2B2T Survival Guide: Food, Tools &amp; First Base</h3>
+            <p>Before you start a map art project, make sure your survival infrastructure is solid. A good base makes good art possible.</p>
+            <a class="card-link" href="/articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() { var nav = document.querySelector('.site-nav'); if (!nav) { return; } if (window.scrollY > 24) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+  function setupMobileNavigation() { var toggle = document.querySelector('[data-nav-toggle]'); var menu = document.querySelector('[data-nav-menu]'); if (!toggle || !menu) { return; } toggle.addEventListener('click', function () { var isOpen = menu.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); }); menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }); }); }
+  function bootSiteUI() { updateNavigationState(); setupMobileNavigation(); window.addEventListener('scroll', updateNavigationState, { passive: true }); }
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
