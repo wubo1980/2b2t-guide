@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T 1.21.4 Update Guide: Mace, Trial Chambers, New Features</title>
+  <meta name="description" content="Complete 2B2T 1.21.4 guide covering Mace PvP, Trial Chambers, Wind Charge combos, Phantom changes, and survival strategies for the Minecraft anarchy server.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="/index.html">&larr; Back to Home</a>
+      <a href="/articles/how-to-leave-spawn.html">Beginner</a>
+      <a href="/articles/best-hacked-clients.html">Clients</a>
+      <a href="/articles/world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="/articles/famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="/articles/highway-network.html">Highways</a>
+      <a href="/articles/duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>2B2T 1.21.4 Update Guide</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Version Update</span>
+          <h1 class="article-title">2B2T 1.21.4 Update Complete Guide: New Features, PvP Changes &amp; Survival Strategies (2026)</h1>
+          <p class="muted">2B2T has officially updated to Minecraft 1.21.4. This guide covers every meaningful change&#8212;the Mace in anarchy PvP, Trial Chambers on the server, Phantom behavior changes, known bugs, and how you should adapt your survival strategy.</p>
+          <div class="article-meta">
+            <span>Published: June 29, 2026</span>
+            <span>Last Updated: June 2026</span>
+            <span>Audience: 2b2t players of all levels</span>
+            <span>Focus: 2b2t 1.21.4, 2b2t mace, 2b2t trial chambers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="/images/2b2t-highway-travel.png" alt="2B2T 1.21.4 update guide illustration" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;">
+
+          <p>On June 23, 2026, 2B2T officially rolled out the Minecraft 1.21.4 update. For a server that ran on 1.12 for years, this is a seismic shift. New blocks, new combat mechanics, new structures, and new bugs. This guide breaks down everything that changed, what it means for your gameplay, and how to adapt.</p>
+
+          <p>Official sources: <a class="inline-link" href="https://www.2b2t.org/1-21-4-update/" target="_blank" rel="noreferrer">2b2t.org 1.21.4 Update</a> | <a class="inline-link" href="https://www.2b2t.org/issues/" target="_blank" rel="noreferrer">Known Issues</a> | <a class="inline-link" href="https://status.2b2t.org" target="_blank" rel="noreferrer">Server Status</a></p>
+
+          <h2 id="what-changed">What Actually Changed in 1.21.4 on 2B2T</h2>
+
+          <p>The official announcement from 2b2t.org listed two specific changes, but the full impact goes much deeper. Here is the complete picture:</p>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Change</th><th>Details</th><th>Impact</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ender Dragon Eye Armor Trim</td><td>Dragon has a slight chance to drop the Eye Armor Trim</td><td>Medium&#8212;trim farming becomes viable</td></tr>
+              <tr><td>Phantoms = Vanilla</td><td>Phantoms now behave as in vanilla 1.21.4</td><td>Low&#8212;most players sleep regularly</td></tr>
+              <tr><td>Mace + Wind Charge</td><td>New weapon and utility item from 1.21</td><td>High&#8212;changes PvP meta</td></tr>
+              <tr><td>Trial Chambers</td><td>New structure generates in deepslate</td><td>High&#8212;new loot source and risk zone</td></tr>
+              <tr><td>Wolf Armor</td><td>Armadillo scutes craft wolf armor</td><td>Low&#8212;wolves die fast on anarchy</td></tr>
+              <tr><td>Breeze Rods</td><td>Dropped by Breezes in Trial Chambers</td><td>Medium&#8212;crafts Wind Charges and Mace</td></tr>
+              <tr><td>1.21 Blocks</td><td>Copper blocks, tuff, crafter, etc.</td><td>Low&#8212;mostly decorative on 2b2t</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <strong>Key takeaway:</strong> The Mace is the single most impactful addition to 2B2T. Everything else ranges from nice-to-have to irrelevant. Your priority should be understanding how the Mace changes combat.
+          </div>
+
+          <h2 id="mace-pvp">The Mace in 2B2T PvP: Game-Changer or Gimmick?</h2>
+
+          <p>The Mace is a new weapon added in Minecraft 1.21 that deals bonus damage based on fall distance. The formula: base 6 damage + (fall blocks fallen &times; 0.5) damage. Fall from 30 blocks, and you hit for 21 damage&#8212;over 10 hearts. Enough to one-shot a player in full Protection IV netherite armor.</p>
+
+          <h3>How the Mace Works</h3>
+          <ul>
+            <li><strong>Critical hits:</strong> Unlike swords and axes, Mace crits happen when you are falling AND hit an entity. The damage multiplier comes from fall distance, not jumping.</li>
+            <li><strong>Wind Charge synergy:</strong> Using a Wind Charge to launch yourself upward, then falling onto an enemy with the Mace, is the optimal combo. Burst damage exceeds crystal PvP.</li>
+            <li><strong>Density Enchantment:</strong> Increases damage per fallen block. At Density V, each block fallen adds +2.5 damage instead of +0.5. A 20-block density V mace hit deals ~56 damage (28 hearts).</li>
+            <li><strong>Breach Enchantment:</strong> Reduces enemy armor effectiveness by up to 50%. Makes Mace effective even against fully-enchanted diamond/netherite opponents.</li>
+          </ul>
+
+          <h3>Mace vs. Crystal PvP</h3>
+          <p>Does the Mace replace crystal PvP? No. But it adds a powerful third option to the combat triangle:</p>
+
+          <table class="inline-table">
+            <thead>
+              <tr><th>Scenario</th><th>Best Weapon</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Open field encounter</td><td>Crystals</td><td>Area denial, easy crystal placement</td></tr>
+              <tr><td>Close quarters (tunnels, bases)</td><td>Axe</td><td>No room to build height for mace</td></tr>
+              <tr><td>Ambush from above</td><td>Mace</td><td>Drop attack with fall damage bonus</td></tr>
+              <tr><td>1v1 in the open</td><td>Crystals or Mace</td><td>Mace requires wind charge set-up, crystals are faster</td></tr>
+              <tr><td>Group fight</td><td>Crystals</td><td>AoE damage wins group engagements</td></tr>
+            </tbody>
+          </table>
+
+          <p>See our <a class="inline-link" href="/articles/2b2t-pvp-guide.html">PvP Guide</a> for a detailed breakdown of crystal and axe combat. The Mace does not replace either&#8212;it adds a high-risk, high-reward option for players who master vertical positioning.</p>
+
+          <h3>Getting a Mace on 2B2T</h3>
+          <p>Maces are obtained from Ominous Vaults inside Trial Chambers. They can also be traded, but expect prices to be high initially. If you find a Trial Chamber, prioritize clearing the Ominous Vault (requires Ominous Trial Key from a captain-kill). The Mace cannot be repaired on an anvil, so each one has limited durability (250 uses, 500 with Unbreaking III). Stockpile several.</p>
+
+          <div class="callout">
+            <strong>Warning:</strong> The Mace damage formula works on 2B2T. Players have already tested it. Ambushes from high ground are now lethal. Do not stand under open sky near known highway intersections without checking above you.
+          </div>
+
+          <h2 id="trial-chambers">Trial Chambers on 2B2T: Worth the Risk?</h2>
+
+          <p>Trial Chambers generate in the deepslate layer (Y=-40 to Y=-20) of newly generated chunks. On 2B2T, most explored terrain already exists. New chunks may generate them, but you will need to travel far from spawn in ungenerated directions.</p>
+
+          <h3>What You Can Get</h3>
+          <ul>
+            <li><strong>Ominous Vault loot:</strong> Mace (primary goal), Heavy Core (for Mace crafting), Ominous Bottles, enchanted books (Density, Breach, Wind Burst)</li>
+            <li><strong>Regular Vault loot:</strong> Enchanted iron/diamond gear, golden apples, XP, arrows, name tags</li>
+            <li><strong>Breeze Rods:</strong> Used to craft Wind Charges (needed for Mace combo) and the Mace itself</li>
+            <li><strong>Ominous Trial Spawner XP:</strong> Excellent for fast XP farming once cleared</li>
+          </ul>
+
+          <h3>The Danger</h3>
+          <p>Trial Chambers are enclosed underground spaces. If another player finds you inside, escape routes are limited. Wind Charges from mob drops will push you around unpredictably. Bring a hacked client with ESP and tracers to spot players before they spot you. The <a class="inline-link" href="/articles/best-hacked-clients.html">hacked clients guide</a> has recommendations for underground ESP settings.</p>
+
+          <p>Do not go alone unless you are well-geared. Coordinate with a group or accept that you may lose your kit. The Trial Chambers are the first major dungeon-type structure in 2B2T&#8217;s history, and they will attract both treasure hunters and ambushers.</p>
+
+          <h2 id="phantom-changes">Phantom Changes and What They Mean</h2>
+
+          <p>The official update notes that Phantoms now "function the same as vanilla Minecraft." Previously, 2B2T had custom phantom behavior that reduced their spawn rate and damage. With vanilla rules, phantoms spawn after 3+ in-game days without sleep, dealing 2 hearts of damage per hit on Hard difficulty.</p>
+
+          <p><strong>Practical impact:</strong> Almost zero for experienced players. Most 2b2t players sleep in beds (in bases or portable beds) or use /kill to reset. Phantoms are a minor nuisance that can damage unenchanted leather/iron armor, but anyone with Protection IV diamond and above ignores them. New players leaving spawn should be aware&#8212;if you do not sleep, phantoms will find you.</p>
+
+          <h2 id="known-bugs">Known Bugs and Issues (1.21.4)</h2>
+
+          <p>As tracked on the <a class="inline-link" href="https://www.2b2t.org/issues/" target="_blank" rel="noreferrer">official issues page</a>, several bugs are being investigated. These are common for a major version jump on a heavily modified server:</p>
+
+          <ul>
+            <li><strong>Elytra flight inconsistencies:</strong> Some players report elytra gliding behavior differs from prior versions. Firework boosting may not work at expected speeds.</li>
+            <li><strong>Portal linking issues:</strong> Nether portals in certain regions fail to link correctly. If your portal sends you somewhere unexpected, break and relight it.</li>
+            <li><strong>Client compatibility:</strong> Older hacked clients (1.12-based) are obsolete. Update to clients that support 1.21.4. Check our <a class="inline-link" href="/articles/best-hacked-clients.html">hacked clients guide</a> for version-compatible options.</li>
+            <li><strong>Chunk loading edge cases:</strong> Border regions where 1.12 chunks meet new 1.21.4 chunks may have visual glitches or block collision issues.</li>
+          </ul>
+
+          <p>Report bugs to bugs@2b2t.org. The server admin (Hausemaster / "K") is actively monitoring and fixing issues.</p>
+
+          <h2 id="survival-strategy">Updated Survival Strategy for 1.21.4</h2>
+
+          <p>With new mechanics come new risks and opportunities. Here is how your 2B2T survival strategy should change:</p>
+
+          <h3>Do Now</h3>
+          <ul>
+            <li><strong>Update your client:</strong> Impact, Future, Wurst, and Meteor have 1.21.4 builds. Do not play on outdated clients.</li>
+            <li><strong>Acquire a Mace:</strong> Find a Trial Chamber or trade for one. Carry it in your hotbar for high-ground ambushes.</li>
+            <li><strong>Stock Wind Charges:</strong> Even if you do not use a Mace, Wind Charges are excellent mobility tools. Launch yourself over walls, across gaps, or upward to escape.</li>
+            <li><strong>Check above you:</strong> The Mace meta means players will build height and drop on you. Do not AFK in open areas.</li>
+          </ul>
+
+          <h3>Do Later</h3>
+          <ul>
+            <li><strong>Explore new terrain:</strong> Travel 50k+ blocks from spawn in a direction known to be unexplored to find Trial Chambers.</li>
+            <li><strong>Farm Ominous Vaults:</strong> Once you find a Trial Chamber, clear it for Mace and enchanted book loot.</li>
+            <li><strong>Update your base:</strong> Add ceiling protection against Mace drops. A simple overhang or roof prevents height-advantage attacks.</li>
+          </ul>
+
+          <p>See also: <a class="inline-link" href="/articles/survival-guide.html">2B2T Survival Guide</a> for base food and tool strategies, and <a class="inline-link" href="/articles/2b2t-pvp-guide.html">PvP Guide</a> for combat techniques. For queue management during the update rush, check <a class="inline-link" href="/articles/queue-wait-tips.html">Queue Wait Tips</a>.</p>
+
+          <h2 id="faq">FAQ: 2B2T 1.21.4</h2>
+
+          <h3>Do I need to install 1.21.4 to play?</h3>
+          <p>Yes. The server now runs 1.21.4. Connect with a 1.21.4 client. ViaVersion may work but is not guaranteed.</p>
+
+          <h3>Will my old base be affected?</h3>
+          <p>No. Existing terrain and builds are preserved. Only new chunk generation uses 1.21.4 features.</p>
+
+          <h3>Is the Mace better than a Sharpness V Netherite Axe?</h3>
+          <p>Situationally better. The Mace one-shots from height. The axe is more reliable at close range. Carry both.</p>
+
+          <h3>Can I dupe Maces?</h3>
+          <p>The old duplication glitches are being re-tested on 1.21.4. Check our <a class="inline-link" href="/articles/duplication-glitches.html">duplications guide</a> for current status.</p>
+
+          <h3>Are there new commands?</h3>
+          <p>The official <a class="inline-link" href="https://www.2b2t.org/commands/" target="_blank" rel="noreferrer">Commands page</a> is being updated. Check there for any additions.</p>
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>The Mace is the biggest change. Master Wind Charge + Mace drop for instant kills.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#what-changed">What changed</a></li>
+            <li><a class="inline-link" href="#mace-pvp">Mace in PvP</a></li>
+            <li><a class="inline-link" href="#trial-chambers">Trial Chambers</a></li>
+            <li><a class="inline-link" href="#phantom-changes">Phantom changes</a></li>
+            <li><a class="inline-link" href="#known-bugs">Known bugs</a></li>
+            <li><a class="inline-link" href="#survival-strategy">Strategy update</a></li>
+            <li><a class="inline-link" href="#faq">FAQ</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss guides, ask questions, and connect with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Explore more guides to master Minecraft's oldest anarchy server.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#9889; 2B2T PvP Guide: Crystal &amp; Axe Combat Strategies (2026)</h3>
+            <p>Master crystal PvP and axe combat alongside the new Mace meta. Understand the full combat toolkit.</p>
+            <a class="card-link" href="/articles/2b2t-pvp-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128736; 2B2T Survival Guide: Food, Tools and First Base</h3>
+            <p>Secure your supplies before you start exploring new 1.21.4 content. Covers essentials for sustained gameplay.</p>
+            <a class="card-link" href="/articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128200; 2B2T Server Report 2026: Player Count &amp; Queue Times</h3>
+            <p>Version updates always cause queue spikes. Check current server metrics and wait times.</p>
+            <a class="card-link" href="/articles/server-report-2026.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128279; How to Skip 2B2T Queue &amp; Wait Time Tips (2026)</h3>
+            <p>Priority queue tips and tricks to get in faster during the post-update rush.</p>
+            <a class="card-link" href="/articles/queue-wait-tips.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T official site, Minecraft Wiki, community discussions, and player reports.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() { var nav = document.querySelector('.site-nav'); if (!nav) { return; } if (window.scrollY > 24) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+  function setupMobileNavigation() { var toggle = document.querySelector('[data-nav-toggle]'); var menu = document.querySelector('[data-nav-menu]'); if (!toggle || !menu) { return; } toggle.addEventListener('click', function () { var isOpen = menu.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); }); menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }); }); }
+  function bootSiteUI() { updateNavigationState(); setupMobileNavigation(); window.addEventListener('scroll', updateNavigationState, { passive: true }); }
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+</body>
+</html>
