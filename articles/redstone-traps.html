@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Redstone Traps: Ultimate Guide to Trapping Players | 2B2T Guide</title>
+  <meta name="description" content="Master redstone trap building on 2B2T: from pressure plates to piston launchers and lava kill chambers. Learn base defense and griefing tricks that catch even experienced players.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZG0XNWBYW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-8ZG0XNWBYW");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="../index.html">&larr; Back to Home</a>
+      <a href="how-to-leave-spawn.html">Beginner</a>
+      <a href="best-hacked-clients.html">Clients</a>
+      <a href="world-download-guide.html">Downloads</a>
+      <a href="base-security-guide.html">Base</a>
+      <a href="famous-bases-events.html">History</a>
+      <a href="survival-guide.html">Survival</a>
+      <a href="highway-network.html">Highways</a>
+      <a href="duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Building</span>
+          <span>/</span>
+          <span>💥 2B2T Redstone & Trap Building: Ultimate Guide to Trapping Players</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Redstone Engineering</span>
+          <h1 class="article-title">💥 2B2T Redstone & Trap Building: Ultimate Guide to Trapping Players</h1>
+          <p class="muted">Redstone traps on 2B2T are essential for both base defense and griefing. Learn how to build effective mechanisms that catch even experienced players.</p>
+          <div class="article-meta">
+            <span>Updated: June 2026</span>
+            <span>Audience: Intermediate 2B2T players</span>
+            <span>Focus: 2b2t redstone, trap building, base defense</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          
+          <p>Redstone trap building on 2B2T is an art form that combines mechanical engineering, psychological deception, and deep knowledge of Minecraft game mechanics. On a server where every player is a potential threat, traps serve as both defense systems and offensive tools. A well-designed trap can eliminate an intruder, protect a base entrance, or simply create moments of controlled chaos that define the 2B2T experience.</p>
+
+<img src="https://images.unsplash.com/photo-1559548331-f9cb980014cf?w=800&q=80" alt="Minecraft redstone trap mechanism diagram for 2B2T server" loading="lazy" style="width:100%;height:auto;border:1px solid var(--pixel-border);border-radius:4px;margin:20px 0;">
+
+          <p>This guide covers the principles and techniques of effective trap building on 2B2T. We will start with fundamental concepts, then progress through specific trap types, and finally discuss integration with larger base defenses. Whether you are building to protect your own structures or designing traps for griefing purposes, the mechanical knowledge is the same. The difference is how you apply it.</p>
+
+          <h2 id="principles">Core principles of trapping on 2B2T</h2>
+
+          <p>Every effective trap on 2B2T shares a set of common principles. The first and most important is invisibility. A trap that the victim can see is not a trap, it is an obstacle. Experienced players on 2B2T are constantly scanning for visual anomalies: pressure plates in unusual positions, suspicious block patterns, redstone dust visible through transparent blocks, or piston faces that should not be there. Your trap must blend seamlessly into the surrounding environment.</p>
+
+          <p>The second principle is reliability. 2B2T's server tick rate is not consistent. Lag spikes, chunk loading delays, and server-side processing bottlenecks can all cause redstone mechanisms to behave unpredictably. A trap that works perfectly in a single-player test world may fail catastrophically on the actual server. Testing your designs under realistic conditions is essential, and building in redundancy for critical components reduces the chance of failure.</p>
+
+          <p>The third principle is containment. A trap that alerts the victim without eliminating them is worse than no trap at all. A warned player will either escape, fight back, or call allies. Your trap must transition quickly from detection to containment to elimination. The window between a player triggering the trap and them understanding what is happening is usually less than a second. Every tick counts.</p>
+
+          <p>The fourth principle is self-preservation. Many trap designs create visual or auditory evidence of their existence after triggering. Obsidian walls that retract incorrectly, exposed redstone components, or lingering TNT damage can reveal your trap's mechanism to future visitors. Design for cleanup, or design traps that self-destruct to prevent analysis.</p>
+
+          <div class="callout">The best 2B2T traps do not look like traps. They look like normal terrain, abandoned structures, or deliberate base features. The player's own curiosity should lead them into the mechanism, not suspicion of the construction itself.</div>
+
+          <h2 id="pressure">Pressure plate and tripwire traps</h2>
+
+          <p>The simplest and most accessible trap category uses pressure plates, tripwires, or weighted plates as triggers. These are the entry-level mechanisms that every 2B2T player should know how to build and defend against. The classic design connects a pressure plate to a TNT charge buried beneath the floor. When a player steps on the plate, the TNT ignites and kills them before they can react.</p>
+
+          <p>Variations on this basic design include delayed fuses that trigger after the player has moved past the plate, multiple TNT charges arranged for complete coverage, and combination plates that require simultaneous activation to disarm. Wooden pressure plates have the advantage of being triggered by dropped items, which can be used to create item-sorting traps that catch players who throw items to test a suspicious floor.</p>
+
+          <p>The main weakness of pressure plate traps is their detection. Experienced 2B2T players inspect floors systematically, especially in high-traffic areas like highway intersections, Nether portal rooms, and the approaches to known base locations. The solution is not to make the plate invisible, but to make it expected. A pressure plate near a chest looks like a deliberate design choice. A pressure plate in the middle of a corridor looks suspicious.</p>
+
+          <h2 id="piston">Piston-based traps and launchers</h2>
+
+          <p>Piston traps represent a significant step up in complexity and effectiveness. These mechanisms use pistons to move blocks, alter terrain, or launch players into deadly situations. The simplest piston trap pushes a player into a pool of lava or into a pit filled with pointed dripstone. More advanced designs use piston cascades to move a player through a series of chambers, each designed to strip their gear or inflict damage.</p>
+
+          <p>Launcher traps use slime blocks and pistons to propel players into the void, into lava, or into hostile mob spawners. The timing is critical: the player must be launched before they can react, and the landing zone must be fatal or inescapable. Obsidian-lined launcher chambers prevent the player from breaking out mid-flight. Water-based launcher variations add an extra layer of unpredictability since water currents can be redirected after launch.</p>
+
+          <p>Zero-tick piston mechanisms, where pistons extend and retract within a single game tick, can create traps that are nearly impossible to detect before activation. These advanced designs require precise redstone timing and careful block placement. They are difficult to build but offer the highest reliability in terms of trap activation. However, they are also more vulnerable to lag-related failures on the 2B2T server.</p>
+
+          <h2 id="lava">Lava and water traps</h2>
+
+          <p>Lava traps are a 2B2T staple because of their simplicity and lethality. A hidden dispenser filled with lava buckets, triggered by a player entering a detection zone, can eliminate an intruder in seconds. The key to an effective lava trap is ensuring that the lava cannot be escaped once released. This means designing the trap chamber with smooth ceiling, walls, and floor surfaces that prevent the victim from pillar-jumping or water-bucketing out.</p>
+
+          <p>Water-based traps serve a different purpose. While water itself does not deal damage, it can be used to move players into more dangerous situations: pushing them into cactus arrays, funneling them into mob grinders, or propelling them through a drop shaft that ends in a kill chamber. Water traps pair well with redstone because water flows can be controlled with dispensers and block updates.</p>
+
+          <p>Combined lava and water traps create obsidian-generating mechanisms that can entomb a player in solid blocks. These designs use the interaction of lava and water to produce cobblestone or obsidian directly on top of the victim. A player trapped inside a freshly generated obsidian block will suffocate if the mechanism fills their air pocket. These are among the most complex traps to build but also among the most satisfying to watch function correctly.</p>
+
+          <h2 id="psychological">Psychological traps and deception</h2>
+
+          <p>The most sophisticated traps on 2B2T do not rely solely on mechanical complexity. They exploit human psychology. The classic bait trap places valuable-looking items in an accessible location and hides the killing mechanism nearby. A single shulker box sitting in an open area, with obvious signs of recent player activity nearby, is an irresistible lure for many players. The trap mechanism activates when the player approaches the bait.</p>
+
+          <p>False path traps create the illusion of a choice. Two corridors, one that appears safe and one that appears dangerous. The safe-looking corridor contains the trap, while the dangerous-looking one leads to actual safety. This reversal of expectations catches players who think they are being clever by choosing the "safer" option. The design relies on subtle visual cues: better lighting in the trap corridor, cleaner floor patterns, or signs of recent passage.</p>
+
+          <p>Abandoned base traps are another psychological category. Players exploring the wilderness frequently investigate abandoned structures for resources, stashes, or building inspiration. A trap built inside a convincing abandoned base has a high success rate because the victim has already categorized the structure as non-threatening. The effort required to create a convincing abandoned aesthetic is significant but worth it for high-value trapping zones.</p>
+
+          <h2 id="defense">Integrating traps with base defenses</h2>
+
+          <p>For players who want to protect their own bases, trap integration with overall base security is essential. The <a class="inline-link" href="base-security-guide.html">2B2T base security guide</a> covers the broader principles of hiding and protecting your base, but traps add an active defense layer that static security cannot provide. A good base defense system uses traps at choke points, at entrance corridors, and near valuable storage areas.</p>
+
+          <p>Perimeter traps are the first line of defense. These are designed to detect and eliminate players who are approaching your base but have not yet found the main entrance. Tripwires hidden in the surrounding terrain, pressure plates on likely approach paths, and creeper-spawner-based traps create a detection zone that covers the approaches to your base. The goal is not necessarily to kill the intruder but to alert you to their presence.</p>
+
+          <p>Interior traps protect the areas that matter most. Storage rooms, crafting areas, and logout spots should all have redundant trap layers. The key is designing traps that do not interfere with your own movement. This often means using frequency-based triggers (same-pressure-plate combinations, sequential lever pulls, hidden switch arrays) that you can disarm while others cannot. Learn from the <a class="inline-link" href="2b2t-stash-hunting-guide.html">2B2T stash hunting guide</a> to understand how raiders think, then design your traps to counter their strategies.</p>
+
+          <h2 id="testing">Testing and avoiding your own traps</h2>
+
+          <p>A trap that kills its builder is a design failure. Testing your traps before deployment is essential, and you should always have a reliable way to deactivate the trap mechanism when you are inside the protected area. The simplest approach is a master disabler switch in a hidden location outside the trap's trigger zone. More advanced designs use redstone lock mechanisms that allow specific players to pass through without triggering the trap.</p>
+
+          <p>Coordinate discipline is especially important when building traps. If anyone discovers the coordinates of your trapped base, they can share them, and the trap's effectiveness drops to zero. Combine trap building with the security practices covered in the <a class="inline-link" href="base-security-guide.html">base security guide</a> to ensure that your location remains unknown. A trap is only useful if the victim enters the area naturally.</p>
+
+          <p>Finally, expect your traps to eventually be discovered. The 2B2T community is large and resourceful. What surprises players today may be routine counterplay tomorrow. The best trap builders continuously iterate their designs, learn from their failures, and develop new mechanisms that exploit emerging game changes. Trap building is not a one-time project. It is an ongoing craft that evolves with the server.</p>
+
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Trap Essentials</span>
+          <p>Invisibility, reliability, containment, and self-preservation are the four pillars of effective trap design on 2B2T.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#principles">Core principles of trapping</a></li>
+            <li><a class="inline-link" href="#pressure">Pressure plate and tripwire traps</a></li>
+            <li><a class="inline-link" href="#piston">Piston-based traps and launchers</a></li>
+            <li><a class="inline-link" href="#lava">Lava and water traps</a></li>
+            <li><a class="inline-link" href="#psychological">Psychological traps and deception</a></li>
+            <li><a class="inline-link" href="#defense">Integrating traps with base defenses</a></li>
+            <li><a class="inline-link" href="#testing">Testing and avoiding your own traps</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Essential Reading</h3>
+          <p>Master base security: <a class="inline-link" href="base-security-guide.html">2B2T Base Security Guide</a></p>
+          <p>Learn raider tactics: <a class="inline-link" href="2b2t-stash-hunting-guide.html">2B2T Stash Hunting Guide</a></p>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Share trap designs and base defense tips with experienced builders.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Combine redstone knowledge with broader security and combat strategies.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🏰 2B2T Base Security: How to Not Get Found</h3>
+            <p>A practical 2B2T base security guide covering hidden entrances, anti-Xray thinking, stash separation, vault layouts, and coordinate discipline.</p>
+            <a class="card-link" href="../articles/base-security-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔫 2B2T PvP Guide: Combat Tips for the Anarchy Server</h3>
+            <p>A practical combat guide for 2B2T covering crystal PvP, swordplay, bow mechanics, and situational awareness in anarchy PvP encounters.</p>
+            <a class="card-link" href="../articles/2b2t-pvp-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">💰 2B2T Economy Guide: Trading, Stashing & Wealth</h3>
+            <p>A comprehensive guide to the 2B2T economy covering trading, stashing, wealth management, and the unique dynamics of anarchy economics.</p>
+            <a class="card-link" href="../articles/2b2t-economy-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🎯 2B2T Stash Hunting: How to Find Hidden Loot</h3>
+            <p>A raider's guide to finding stashes on 2B2T covering scanning techniques, common hiding patterns, and the tools used by experienced hunters.</p>
+            <a class="card-link" href="../articles/2b2t-stash-hunting-guide.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> © 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki, public community archives, player discussions, and historical map research.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) return;
+    if (window.scrollY > 24) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+
+  function setupMobileNavigation() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var menu = document.querySelector('[data-nav-menu]');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  function bootSiteUI() {
+    updateNavigationState();
+    setupMobileNavigation();
+    window.addEventListener('scroll', updateNavigationState, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
