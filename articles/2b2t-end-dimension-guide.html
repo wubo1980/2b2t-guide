@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T End Dimension Guide: End Cities, Shulkers & Elytra</title>
+  <meta name="description" content="A complete 2B2T end dimension guide covering dragon fight strategy, end city loot, shulker boxes, elytra repair, and PvP risk management tactics in the End.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+  
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="../index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="../index.html">&larr; Back to Home</a>
+      <a href="how-to-leave-spawn.html">Beginner</a>
+      <a href="best-hacked-clients.html">Clients</a>
+      <a href="world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="highway-network.html">Highways</a>
+      <a href="duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>🌌 2B2T End Dimension Guide: End Cities, Shulkers & Elytra</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">End Dimension</span>
+          <h1 class="article-title">🌌 2B2T End Dimension Guide: End Cities, Shulkers & Elytra</h1>
+          <p class="muted">The End on 2B2T is not the quiet loot room you remember from singleplayer. It is a contested dimension where one wrong portal can cost you everything. This guide covers how to enter, survive, loot, and escape the 2B2T End with real results.</p>
+          <div class="article-meta">
+            <span>Published: July 2026</span>
+            <span>Audience: English-speaking players</span>
+            <span>Focus: 2b2t end dimension, 2b2t end city guide</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+          <img src="../images/2b2t-end-portal.jpg" alt="A player approaching an End portal frame on 2B2T, with obsidian pillars visible in the background" style="width:100%;margin-bottom:22px;border:1px solid var(--pixel-border);box-shadow:var(--shadow);image-rendering:pixelated;" onerror="this.style.display='none'">
+          
+          <p>A complete <strong>2B2T end dimension guide</strong> needs to address something most Minecraft guides skip: the End on an anarchy server is not a farming zone — it is a PvP arena with loot inside it. Every end portal on 2B2T is a known coordinate. Every gateway is camped. Every dragon fight is interrupted. If you treat the End like a normal Minecraft dimension, you will lose your gear, your time, and possibly your motivation in the first five minutes.</p>
+          <p>But the End is also where some of the most valuable resources on 2B2T live. Elytra, shulker boxes, end rods, chorus fruit, and high-value enchanted gear are all gated behind end cities. Learning to operate in the End safely is not optional if you want mid-game independence. A reliable <a class="inline-link" href="/articles/survival-guide.html"><strong>2b2t survival guide</strong></a> and <a class="inline-link" href="/articles/2b2t-elytra-travel-guide.html"><strong>2b2t end city guide</strong></a> together are the difference between dying repeatedly at an obsidian frame and walking away with a full inventory of shulker shells and a fresh set of wings.</p>
+          <p>The key is preparation before crossing the portal. Most players who die in the End on 2B2T die because they entered without a plan. This guide walks through every phase: entry, dragon fight, gateway navigation, end city looting, and escape. If you follow these steps, the End becomes a high-value destination instead of a graveyard.</p>
+
+          <h2 id="preparation">Before you enter: preparation checklist</h2>
+          <p>Entering the End on 2B2T requires different preparation than a normal server. You cannot assume the portal is safe, the dragon is alive, or the gateway is unguarded. Here is what you need before you light the frame:</p>
+          <ul>
+            <li><strong>Ender pearls</strong> — at least six. You need twelve to fill the frame if you come alone. Bring extras in case of missed throws or an immediate gateway escape.</li>
+            <li><strong>Good armor</strong> — preferably diamond or netherite with Protection IV. Leather or iron will not survive a player ambush.</li>
+            <li><strong>A bow with decent punch</strong> — for knocking back the dragon and, more importantly, for deterring players near the portal.</li>
+            <li><strong>Blocks and a pickaxe</strong> — you will need to pillar or bridge quickly on the main island.</li>
+            <li><strong>A backup bed or respoint anchor</strong> — set near the overworld portal so you can rejoin without a full reset.</li>
+            <li><strong>Water bucket</strong> — for fall damage and emergency fire protection.</li>
+            <li><strong>A Discord call or group chat</strong> — if you have allies, use voice coordination. Solo End runs on 2B2T are high-risk even for experienced players.</li>
+          </ul>
+          <div class="callout">Timing matters. The lowest-traffic hours on 2B2T are typically late-night US time (03:00-07:00 UTC) and mid-afternoon EU time. Weekend evenings are the worst time to enter the End. If you see chat activity near portal coordinates, wait.</div>
+          <p>Do not bring your entire inventory. Anything you carry into the End can be lost to a player kill or a void drop. Bring essential gear only, and leave your stash behind in a secure location. The best armor for an end run is armor you can afford to lose.</p>
+
+          <h2 id="portal-choice">Choosing the right end portal</h2>
+          <p>On 2B2T, the End portal in the main stronghold is a known commodity. Most stronghold coordinates have been mapped and shared for years (<a class="inline-link" href="https://2b2t.miraheze.org/wiki/Stronghold" target="_blank" rel="noreferrer">2b2t Wiki: Stronghold Guide</a>). The portal at roughly (x: -1340, z: 480) near the origin is one of the most commonly used entrances — which means it is also one of the most commonly camped. Do not use known portals during peak hours.</p>
+          <p>Each world seed produces a fixed set of strongholds. On 2B2T, the first ring of three strongholds sits roughly 1400-2800 blocks from origin. If you can find an unmarked stronghold entrance, you reduce the risk of an ambush at the frame itself. Eye of ender navigation is audible to nearby players, so consider traveling deep into the nether and popping up near a stronghold that has received less traffic.</p>
+          <p>Avoid the end portal at the world spawn stronghold entirely. It is camped continuously. Even if the frame looks clear on arrival, players with invisibility potions may be waiting within render distance. Always scan the area with F3 + B to see hitboxes before approaching.</p>
+          <p>The base rule: if the frame or surrounding stronghold shows signs of recent activity — lit torches, missing silverfish, modified blocks — assume it is watched. Move to a different stronghold.</p>
+
+          <h2 id="dragon-fight">Dragon fight: 2B2T style</h2>
+          <p>The Ender Dragon on 2B2T behaves exactly like the vanilla Minecraft dragon. The difference is the audience. On a normal server, you fight the dragon alone or with your party. On 2B2T, you fight the dragon while watching for invisible players, crystal-campers, and late arrivals who want your portal loot.</p>
+          <p>Your first decision is whether to kill the dragon at all. The dragon must be alive for end gateways to activate. Each gateway leads to the outer islands where end cities generate. If the dragon is already dead, you can still access the outer islands, but only through existing gateways that have been opened. Many 2B2T players travel to the outer islands by building a long bridge from the main island instead of using a gateway — a slow but consistent method.</p>
+          <p>If you decide to fight the dragon, here is the safest approach:</p>
+          <ol>
+            <li><strong>Clear the obsidian pillars first</strong> — destroy every end crystal on the pillars before the dragon can use them for healing. On 2B2T, leaving crystals up is an invitation for PvP players to swoop in during the chaos.</li>
+            <li><strong>Use the dragon's perch as cover</strong> — the fountain structure in the center provides partial cover. Do not stand in the open.</li>
+            <li><strong>Keep one eye on the portal</strong> — any player can enter through the portal while you fight. If someone arrives, disengage from the dragon and assess.</li>
+            <li><strong>Finish fast</strong> — the longer you spend on the main island, the higher your chance of encountering another player. A well-prepared fighter with a good bow can kill the dragon in under three minutes.</li>
+          </ol>
+          <p>Once the dragon dies, you have roughly sixty seconds before the gateways activate. During that window, gather the dragon egg if you want it (it drops on the fountain), and prepare to move to a gateway immediately.</p>
+
+          <h2 id="gateway-navigation">End gateway navigation</h2>
+          <p>After the dragon dies, up to twenty end gateways appear around the main island. Each gateway is a floating structure with a single block of bedrock in the center. Throw an ender pearl into the gateway to teleport to the outer islands.</p>
+          <p>On 2B2T, the outer islands extend about 10,000 blocks from the center before the End land stops generating. End cities generate on these islands at roughly 300-500 block intervals. The most common direction for end city generation favors the positive X axis, meaning cities are denser in the eastern outer islands.</p>
+          <p>Key considerations for gateway choice on 2B2T:</p>
+          <ul>
+            <li><strong>Do not use the nearest gateway to the portal</strong> — it is the most predictable route and the most likely to have drop-in traffic.</li>
+            <li><strong>Each gateway teleports you to the same relative radial position</strong> — the outer islands repeat the same ring pattern. There is no advantage to choosing a specific gateway number.</li>
+            <li><strong>Mark your gateway</strong> — place a torch or block on the gateway you used so you can find your way back to the main island later.</li>
+            <li><strong>After teleporting, move 100+ blocks</strong> — do not stand on the arrival platform. Other players may arrive through the same gateway.</li>
+          </ul>
+          <div class="callout">Pro tip: some 2B2T players build small bases near popular gateway arrival points. If you see a structure near a gateway, treat it as hostile territory until confirmed otherwise.</div>
+
+          <h2 id="end-city-looting">Looting end cities safely</h2>
+          <p>End cities on the 2B2T outer islands contain the loot you came for: shulker boxes, elytra, and high-level enchanted gear. But looting an end city on 2B2T requires a different approach than a normal world.</p>
+          <p><strong>Shulker boxes</strong> are the most valuable single item in the End. Each end city generates with at least one ship carrying an elytra and may contain multiple shulkers. On 2B2T, shulker shells are a currency-like resource. Do not use every shell you find immediately — store extras for future crafting. A single end city can yield 4-8 shells on average.</p>
+          <p><strong>Elytra</strong> are found in end ships. The ship is the floating structure adjacent to the main end city tower. To reach it safely, bridge across with blocks rather than flying — elytra flight in the void is risky when you do not have rockets yet. If the ship has already been looted (check the item frame on the bow of the ship), move to the next city.</p>
+          <p><strong>End rods and purpur blocks</strong> are decorative but worth collecting if you have inventory space. Some 2B2T builders trade for these materials.</p>
+          <p>Looting strategy:</p>
+          <ul>
+            <li><strong>Scan before you enter</strong> — circle the end city from a distance. Check for signs of player activity: broken blocks, missing shulkers, torches that do not match natural generation.</li>
+            <li><strong>Loot top-down</strong> — start from the highest accessible room and work down. This minimizes the risk of being trapped below.</li>
+            <li><strong>Use silent movement</strong> — shift-walk when inside. Shulkers detect movement, not crouching.</li>
+            <li><strong>Do not linger</strong> — a successful end city run should take under ten minutes per city. Extended looting increases exposure.</li>
+          </ul>
+
+          <h2 id="elytra-repair">Elytra repair strategy</h2>
+          <p>Elytra have limited durability. On 2B2T, finding multiple elytra is common over time, but repairing them requires phantom membranes — which are harder to come by on an anarchy server than in singleplayer. Phantom membranes drop from phantoms (<a class="inline-link" href="https://minecraft.wiki/w/Phantom" target="_blank" rel="noreferrer">Minecraft Wiki: Phantom</a>), which only spawn when a player has not slept for three or more in-game days. On 2B2T, most players sleep irregularly, so phantoms do spawn, but they are not a reliable farm target.</p>
+          <p>The practical approach to elytra repair on 2B2T:</p>
+          <ul>
+            <li><strong>Collect multiple elytra</strong> — every successful end city run should return with at least one spare elytra if available. The mending enchantment on any spare elytra will slowly repair it through XP gain.</li>
+            <li><strong>Use mending</strong> — a mending elytra is the single most valuable gear item on the server. If you find one in an end ship, prioritize its preservation over everything else.</li>
+            <li><strong>Trade for membranes</strong> — other players may accept shulker shells, end rods, or other End resources in exchange for phantom membranes.</li>
+            <li><strong>Anvil repair as last resort</strong> — combining two damaged elytra in an anvil preserves the enchantments from the first elytra and restores durability. This costs levels but is faster than membrane collection.</li>
+          </ul>
+          <p>A well-maintained elytra is the difference between world access and world restriction on 2B2T. Without one, your travel options are limited to nether highways and boat routes. That alone makes the End worth visiting, even with all the risks.</p>
+
+          <h2 id="escape-plan">Escape: how to get out alive</h2>
+          <p>Getting out of the End on 2B2T is harder than getting in. Players often have their portal base camped after a successful looting run. Here is how to survive the return trip:</p>
+          <ul>
+            <li><strong>Use a different gateway for return</strong> — the gateway you arrived through may be watched. Travel laterally on the outer islands and use a different gateway to return to the main island.</li>
+            <li><strong>Scan the main island before approaching the portal</strong> — use FOV adjustments or a zoom mod if available. If you see movement, do not approach the portal. Log out in the End and try again in a few hours.</li>
+            <li><strong>Ender pearl through the portal at speed</strong> — do not walk up to the frame. Sprint and pearl into the portal blocks to minimize your exposure window.</li>
+            <li><strong>Have a getaway route in the overworld</strong> — your overworld portal exit should not be in the middle of an open field. Ideally, place the overworld portal inside a secure box or small shelter that you can close behind you.</li>
+          </ul>
+          <div class="callout">If you are carrying high-value loot and feel unsafe about the portal return, consider stashing your items in an Ender Chest on the outer islands and making a dry run back first. Ender Chests are per-player, so no one else can access your items.</div>
+          <p>The ultimate escape strategy is to never need an escape: scout the End dimension during a low-traffic window, loot efficiently, review <a class="inline-link" href="/articles/base-security-guide.html">base security principles</a>, and leave before the player density rises. A disciplined thirty-minute End run can return more value than hours of overworld grinding.</p>
+
+          <h2 id="common-mistakes">Common End mistakes on 2B2T</h2>
+          <p>Most End losses on 2B2T follow a predictable pattern. Avoid these mistakes and your success rate rises dramatically:</p>
+          <ol>
+            <li><strong>Entering with your main gear</strong> — as noted above, entered the End should be treated as a calculated risk, not a routine outing. Use sacrificial armor and tools.</li>
+            <li><strong>Standing still on the main island</strong> — the main island is the most dangerous part of the End dimension on 2B2T. Keep moving.</li>
+            <li><strong>Building visible structures</strong> — a torched path, a column of cobblestone, any sign of activity on the outer islands attracts attention. Try to blend with the terrain.</li>
+            <li><strong>Ignoring the void</strong> — void damage in the End is instant death with no item recovery. Keep a firework rocket in your offhand at all times during elytra flight.</li>
+            <li><strong>Getting greedy</strong> — one fully looted end city, handled properly, is a successful run. Trying to hit five cities on a single trip multiplies your risk exponentially.</li>
+          </ol>
+          <p>A reliable <strong>2B2T end dimension guide</strong> is not about showing you the best loot tables. It is about teaching you how to operate in a dimension where the biggest threat is not the mobs — it is the other players. If you respect that reality and prepare accordingly, the End becomes a manageable high-yield zone instead of a loot piñata for other players. Good luck out there, and watch your portals.</p>
+        
+        </article>
+        <aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Loot</span>
+          <p>The End rewards preparation, not bravery. Survive the entry, move fast on the islands, and never carry more than you can lose.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#preparation">Preparation checklist</a></li>
+            <li><a class="inline-link" href="#portal-choice">Choosing the right portal</a></li>
+            <li><a class="inline-link" href="#dragon-fight">Dragon fight strategy</a></li>
+            <li><a class="inline-link" href="#gateway-navigation">Gateway navigation</a></li>
+            <li><a class="inline-link" href="#end-city-looting">Looting end cities</a></li>
+            <li><a class="inline-link" href="#elytra-repair">Elytra repair strategy</a></li>
+            <li><a class="inline-link" href="#escape-plan">Escape & survival</a></li>
+            <li><a class="inline-link" href="#common-mistakes">Common mistakes</a></li>
+        </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Share route tips, end city coordinates, elytra repair tricks, and survival strategies with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Link end gameplay with travel, survival, base defense, and the broader 2B2T resource chain.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🦅 2B2T Elytra Travel Guide</h3>
+            <p>A practical guide to elytra travel on 2B2T, covering rocket use, navigation strategy, combat flying, and survival in the nether roof.</p>
+            <a class="card-link" href="/articles/2b2t-elytra-travel-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🛠️ 2B2T Survival Guide: Food, Tools & First Base</h3>
+            <p>Secure food, gather tools, avoid beginner mistakes, and build a hidden first base after escaping spawn.</p>
+            <a class="card-link" href="/articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🛣️ 2B2T Highway Network: How to Travel Fast</h3>
+            <p>Travel the 2B2T highway network, Nether routes, ice roads, coordinate logic, and how to move fast without getting predictable.</p>
+            <a class="card-link" href="../articles/highway-network.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🏰 2B2T Base Security: How to Not Get Found</h3>
+            <p>2B2T base security guide covering hidden entrances, anti-Xray thinking, stash separation, vault layouts, and coordinate discipline.</p>
+            <a class="card-link" href="/articles/base-security-guide.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔥 How to Leave 2B2T Spawn (2026 Guide)</h3>
+            <p>A practical 2B2T spawn guide covering route choice, supplies, death resets, and how to survive the first hostile kilometers.</p>
+            <a class="card-link" href="../articles/how-to-leave-spawn.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">🔄 2B2T Duplication Glitches: History & Current Status</h3>
+            <p>A history-first guide to 2B2T duplication glitches, major dupe eras, economic impact, current status, and the risks of chasing rumors.</p>
+            <a class="card-link" href="../articles/duplication-glitches.html">Read Guide &rarr;</a>
+          </article>
+
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">⚡ Best 2B2T Hacked Clients (Free & Paid)</h3>
+            <p>A practical look at the best 2B2T hacked client options, including free and paid tools, strengths, weaknesses, and safe expectations.</p>
+            <a class="card-link" href="../articles/best-hacked-clients.html">Read Guide &rarr;</a>
+          </article>
+</div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T Wiki (<a href="https://2b2t.miraheze.org/wiki/Travel" style="color:var(--accent);" target="_blank" rel="noreferrer">2b2t.miraheze.org</a>), Minecraft Wiki (<a href="https://minecraft.wiki/w/The_End" style="color:var(--accent);" target="_blank" rel="noreferrer">minecraft.wiki</a>), player community discussions on Reddit r/2B2T and X.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  /**
+   * Toggles the navigation background based on the scroll position.
+   */
+  function updateNavigationState() {
+    var nav = document.querySelector('.site-nav');
+    if (!nav) {
+      return;
+    }
+
+    if (window.scrollY > 24) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  /**
+   * Connects the mobile navigation button with the menu panel.
+   */
+  function setupMobileNavigation() {
+    var toggle = document.querySelector('[data-nav-toggle]');
+    var menu = document.querySelector('[data-nav-menu]');
+    if (!toggle || !menu) {
+      return;
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /**
+   * Starts all small UI behaviors after the DOM is ready.
+   */
+  function bootSiteUI() {
+    updateNavigationState();
+    setupMobileNavigation();
+    window.addEventListener('scroll', updateNavigationState, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/va.min.js"></script>
+</body>
+</html>
