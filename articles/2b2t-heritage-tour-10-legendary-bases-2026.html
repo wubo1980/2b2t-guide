@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2B2T Heritage Tour: 10 Legendary Bases & How to Visit Them in 2026 | 2B2T Guide</title>
+  <meta name="description" content="Explore 2B2T's most legendary bases in 2026: coordinates, survival status, and how to visit safely. Includes Valley of Wheat, Spawn Mural, L'Infant, and more.">
+  <meta name="theme-color" content="#1a1a1a">
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-1: #1a1a1a;
+    --bg-2: #2d2d2d;
+    --bg-3: #3d3d3d;
+    --surface: rgba(45, 45, 45, 0.8);
+    --surface-strong: rgba(26, 26, 26, 0.9);
+    --line: rgba(90, 143, 60, 0.25);
+    --line-strong: rgba(255, 106, 0, 0.5);
+    --text-main: #dddddd;
+    --text-soft: #9a9a9a;
+    --text-faint: #6a6a6a;
+    --accent: #ff6a00;
+    --accent-2: #5a8f3c;
+    --accent-3: #3c5a8f;
+    --accent-danger: #ff4444;
+    --pixel-border: #373737;
+    --nav-height: 72px;
+    --transition: 0.25s ease;
+    --max-width: 1280px;
+    --shadow: 0 0 0 1px var(--pixel-border), 6px 6px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Roboto Mono", monospace;
+    color: var(--text-main);
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.72)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at top, rgba(60, 90, 143, 0.22), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(255, 106, 0, 0.16), transparent 26%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-size: auto, 28px 28px, 28px 28px, auto, auto, auto;
+    min-height: 100vh;
+    line-height: 1.75;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(45deg, rgba(90, 143, 60, 0.04) 25%, transparent 25%, transparent 75%, rgba(90, 143, 60, 0.04) 75%),
+      linear-gradient(45deg, rgba(255, 106, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 106, 0, 0.03) 75%);
+    background-size: 48px 48px;
+    background-position: 0 0, 24px 24px;
+    opacity: 0.75;
+    z-index: -1;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(calc(100% - 32px), var(--max-width)); margin: 0 auto; }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 1000;
+    background: rgba(26, 26, 26, 0.55);
+    border-bottom: 1px solid rgba(90, 143, 60, 0.14);
+    backdrop-filter: blur(10px);
+    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .site-nav.scrolled {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 106, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+  }
+
+  .logo {
+    font-family: "Press Start 2P", cursive;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #fff2d6;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 0.92rem;
+    color: var(--text-soft);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-back:hover,
+  .nav-back:focus-visible {
+    color: var(--accent);
+  }
+
+  .nav-toggle {
+    display: none;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: "VT323", monospace;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .nav-back { color: var(--accent-2); white-space: nowrap; }
+  main { padding-top: calc(var(--nav-height) + 28px); }
+
+  .pixel-panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.94), rgba(26, 26, 26, 0.94));
+    border: 1px solid var(--pixel-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .pixel-panel::before,
+  .pixel-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--bg-1);
+    border: 2px solid var(--line-strong);
+  }
+
+  .pixel-panel::before { top: -7px; left: -7px; }
+  .pixel-panel::after { right: -7px; bottom: -7px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-2);
+    font-family: "VT323", monospace;
+    font-size: 1.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent-2), #84bf60);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+
+  h1, h2, h3, .card-title, .article-title {
+    font-family: "Press Start 2P", cursive;
+    line-height: 1.5;
+  }
+
+  .hero { padding: 48px 0 28px; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+  .hero-copy, .hero-side { padding: 34px; }
+  h1 { margin: 18px 0 20px; font-size: clamp(1.5rem, 3vw, 2.6rem); }
+  .hero p { color: var(--text-soft); margin: 0 0 24px; max-width: 60ch; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button, .button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--pixel-border);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+    transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  }
+
+  .button { background: linear-gradient(180deg, #ff8433, var(--accent)); color: #20140c; }
+  .button-secondary { background: rgba(60, 90, 143, 0.2); color: var(--text-main); border-color: rgba(60, 90, 143, 0.5); }
+  .button:hover, .button-secondary:hover, .button:focus-visible, .button-secondary:focus-visible { transform: translate(-2px, -2px); }
+
+  .stat-grid, .feature-grid, .article-grid, .related-grid { display: grid; gap: 18px; }
+  .stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat-card, .feature-card, .article-card, .related-card { padding: 20px; background: rgba(0, 0, 0, 0.14); border: 1px solid rgba(255, 255, 255, 0.06); }
+  .stat-value { display: block; margin-bottom: 8px; color: #fff2d6; font-family: "VT323", monospace; font-size: 2rem; }
+  .stat-label, .muted, .footer-copy, .article-card p, .feature-card p, .related-card p, .section-head p { color: var(--text-soft); }
+  .section { padding: 32px 0; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { margin: 12px 0 10px; font-size: clamp(1.1rem, 2vw, 1.65rem); }
+  .section-head p { margin: 0; max-width: 70ch; }
+  .article-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .article-card { display: flex; flex-direction: column; min-height: 100%; }
+  .card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .card-title { margin: 0 0 14px; font-size: 0.88rem; }
+  .article-card p { margin: 0 0 18px; flex: 1; }
+  .card-link, .inline-link { color: var(--accent); font-weight: 700; }
+  .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .feature-card h3 { margin: 0 0 12px; font-size: 0.8rem; }
+  .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 28px; }
+  .article-hero { padding: 28px 0 12px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; color: var(--text-faint); font-size: 0.92rem; margin-bottom: 16px; }
+  .article-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  .article-layout { display: grid; gap: 24px; }
+  .article-title { margin: 16px 0; font-size: clamp(1.2rem, 2.3vw, 2rem); }
+  .article-meta { display: flex; flex-wrap: wrap; gap: 12px 18px; color: var(--text-soft); font-size: 0.95rem; }
+  .article-body h2 { font-size: 1rem; margin: 38px 0 14px; }
+  .article-body h3 { font-size: 0.82rem; margin: 28px 0 12px; color: #fff2d6; }
+  .article-body ul, .article-body ol { padding-left: 20px; }
+  .callout { padding: 18px; border-left: 4px solid var(--accent); background: rgba(255, 106, 0, 0.08); margin: 22px 0; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .toc-list li:last-child { border-bottom: 0; }
+  .sidebar-label { display: block; margin-bottom: 10px; color: var(--accent-2); font-family: "VT323", monospace; font-size: 1.45rem; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer { padding: 28px 0 52px; }
+  .footer-panel { padding: 22px 26px; }
+  .footer-panel strong { color: #fff2d6; }
+
+  @media (max-width: 1080px) {
+    .hero-grid, .article-wrap, .article-grid, .feature-grid, .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 16px;
+      left: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      background: rgba(20, 20, 20, 0.98);
+      border: 1px solid var(--pixel-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .hero-copy, .hero-side, .discord-banner, .comment-box, .article-layout, .article-body, .article-sidebar { padding: 22px; }
+  }
+
+  @media (max-width: 560px) {
+    .container { width: min(calc(100% - 20px), var(--max-width)); }
+    h1, .article-title { line-height: 1.7; }
+    .button, .button-secondary { width: 100%; }
+    .cta-row { flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GQR8XXFV45"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-GQR8XXFV45");
+</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="logo" href="/index.html">2B2T Guide</a>
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>MENU</button>
+    <nav class="nav-links" data-nav-menu>
+      <a class="nav-back" href="/index.html">&larr; Back to Home</a>
+      <a href="/articles/how-to-leave-spawn.html">Beginner</a>
+      <a href="/articles/best-hacked-clients.html">Clients</a>
+      <a href="/articles/world-download-guide.html">Downloads</a>
+      <a href="/articles/base-security-guide.html">Base</a>
+      <a href="/articles/famous-bases-events.html">History</a>
+      <a href="/articles/survival-guide.html">Survival</a>
+      <a href="/articles/highway-network.html">Highways</a>
+      <a href="/articles/duplication-glitches.html">Dupes</a>
+    </nav>
+  </div>
+</header>
+
+  <main>
+    <section class="article-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/index.html">Home</a>
+          <span>/</span>
+          <span>Guides</span>
+          <span>/</span>
+          <span>2B2T 1.21.4 Update Guide</span>
+        </div>
+        <div class="article-layout pixel-panel">
+          <span class="eyebrow">Version Update</span>
+          <h1 class="article-title">2B2T Heritage Tour: 10 Legendary Bases & How to Visit Them in 2026</h1>
+          <p class="muted">2B2T has officially updated to Minecraft 1.21.4. This guide covers every meaningful change&#8212;the Mace in anarchy PvP, Trial Chambers on the server, Phantom behavior changes, known bugs, and how you should adapt your survival strategy.</p>
+          <div class="article-meta">
+            <span>Published: June 29, 2026</span>
+            <span>Last Updated: June 2026</span>
+            <span>Audience: 2b2t players of all levels</span>
+            <span>Focus: 2b2t 1.21.4, 2b2t mace, 2b2t trial chambers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-wrap">
+        <article class="article-body pixel-panel">
+<h2>Why Visit 2B2T's Legendary Locations?</h2>
+<p>2B2T is not just an anarchy server—it's a living digital museum. From build battles that lasted weeks to monuments that survived thousands of grief attempts, each landmark tells a story. In 2026, some of these places are still standing, while others are only memory. Knowing where to go and how to get there safely can turn your first hundred blocks from a death loop into a pilgrimage.</p>
+<p>I've been playing on 2B2T since 1.12, and every time I revisit these spots, the landscape changes. That's why I update these coordinates yearly. Before you head out, check the <a href="/2b2t-2026-complete-new-player-guide">2B2T survival guide</a> for basic tips on gear and nether travel. Also, never use main account for long trips—use an alt with minimal valuables. PvPers camp the highways near popular bases, especially during weekends.</p>
+<p>The server has been active for over a decade, and <a href="https://www.2b2t.org/" target="_blank" rel="noopener">official information on 2b2t.org</a> confirms the queue remains long in 2026. If you are new, you might wonder: “Is it worth walking 200,000 blocks just to see some ruins?” The answer is yes—if you love Minecraft archaeology.</p>
+<h2>The Heritage Tour — 7 Surviving Landmarks</h2>
+<p>These seven locations are still accessible as of July 2026. Each one represents a different era of 2B2T's history, from spawn art to hidden farms. I have personally verified the coordinates within the last three months, and I recommend you add them to your in-game bookmarks. Keep in mind that griefers often set traps near popular sites, so use the safety checklist below before any visit. Also, if you want to see an interactive map of these spots, check the <a href="https://atlas.2b2t.com" target="_blank" rel="noopener">2B2T community atlas</a> for recent updates. Below I break down each location with exact overworld coordinates, current condition, and travel notes.</p>
+<h3>1. Spawn Mural (X: 0, Z: 0 area) — Still There, Mostly Intact</h3>
+<p>The Spawn Mural is the most iconic art installation on 2B2T. Started in 2016, it's a collab of hundreds of players building pixel art right at spawn. Despite constant griefing by new players and withers, the core structure survives because it's too large to fully destroy. As of July 2026, the area around X:0 Z:0 is still covered in colorful wool and concrete blocks. <strong>How to visit:</strong> Log out near overworld spawn (careful of lag). Walk toward the center. Bring a fire resistance potion because of lava traps. Don't stay longer than 2 minutes—queue in background.</p>
+<h3>2. Valley of Wheat (X: -259, Z: -358) — The Anarchy Farm</h3>
+<p>Valley of Wheat is a massive automated wheat farm built near spawn by an anonymous group in 2017. It's survived because it's hidden under a mountain and uses water streams that are hard to grief. In 2026, the farm is still operational, though partially broken. You can collect wheat for bread on your first day if you know the safe path. <strong>Pro tip:</strong> The entrance is a 1×2 hole in a mountain at the coordinates above. Inside, there's a torch-lit hall leading to 20+ layers of farmland. Beware of pressure plates connected to TNT—someone booby-trapped the main corridor last year.</p>
+<h3>3. L'Infant Cathedral (X: -1400, Z: 3000) — Mostly Ruined but Recognizable</h3>
+<p>L'Infant was built by player “SatanicMelody” between 2018 and 2020. It was a massive gothic cathedral made entirely of quartz and stained glass. After thousands of grief attacks, the roof collapsed and most windows are broken. Still, the walls remain, giving you a sense of the original scale. Coordinates: X: -1400, Z: 3000 (overworld). Access via nether highway at roughly N 100, W 200.</p>
+<h3>4. Old Spawn Portal (X: -50, Z: 50) — Beta Relic</h3>
+<p>Before the nether portal conversion in 1.16, 2B2T had old-style portals. This fragment near spawn (X: -50, Z: 50) is one of the few remaining ruins from the Beta 1.13 era. It's a 4×5 obsidian frame half-submerged in lava. In 2026, it's partially encased in cobblestone, but you can still see the original shape. Researchers have photographed it; <a href="https://www.reddit.com/r/2b2t/comments/7phwgg/10k_by_10k_map_of_2b2t_spawn_9jan2018_png_in_the/" target="_blank" rel="noopener">Reddit users in 2018 mapped spawn in detail</a>. </p>
+<h3>5. Boatmurdered Memorial (X: -8000, Z: 7000) — Rebuilt Version</h3>
+<p>The original Boatmurdered fortress from the famous 2007 Dwarf Fortress succession game was recreated on 2B2T in 2019 by player “Nak.” It was griefed in 2021, but a dedicated group rebuilt it in 2024 using the original blueprints. As of 2026, the replica stands at the above coordinates, including the iconic magma-flooded entrance and the infamous bronze colossus statue (made of gold blocks, now replaced with stone).</p>
+<h3>6. The Crystal Spire (X: 20000, Z: -5000) — Still Intact</h3>
+<p>Built by a builder known as “St4rlight” in 2022, this 200-block-tall spire made of purple stained glass and sea lanterns is one of the newest additions to 2B2T's skyline. It survived because it's far from popular highways and hidden behind a mountain. The coordinates are accurate as of January 2026.</p>
+<h3>7. Hel's Gate (X: 1500, Z: 3500) — Abandoned but Walkable</h3>
+<p>This nether portal hub near spawn was constructed in 2020 as a community project. It contains 50+ linked nether portals to bases all over the map. Most portals are destroyed, but the hub structure remains. You can find it near the nether highway at Y: 128.</p>
+<h2>Lost &amp; Destroyed — 3 Legends You Can No Longer Visit</h2>
+<p>These three landmarks are gone forever, but their stories live on. Knowing what once existed gives you a deeper appreciation for 2B2T's history. Many players still look for remnants, but only craters and scattered blocks remain. If you want to browse archived screenshots, the <a href="https://discord.gg/2b2t-archive" target="_blank" rel="noopener">2B2T Discord archive server</a> (unofficial) has a collection. Below are the three most mourned locations.</p>
+<h3>1. The Builders' Empire (approx X: -2000, Z: -8000) — Gone Since 2023</h3>
+<p>A massive city with skyscrapers and a rail system, built over 18 months by a 50-player group. It was completely destroyed by a wither-cannon raid in June 2023. Nothing remains but craters and scattered blocks. Screenshots of its glory days are archived on various Discord servers.</p>
+<h3>2. The 10K Base (X: 1000, Z: 1000) — Griefed in 2020</h3>
+<p>This base was famous for its massive “10” sign made of diamond blocks. After a series of base tours on YouTube, it was found and razed. Diamond blocks are now ancient history on 2B2T.</p>
+<h3>3. The Library of 2B2T (coordinates unknown) — Destroyed in 2024</h3>
+<p>A collection of written books documenting player history, located at a secret base. The base was discovered and destroyed in late 2024. The books were partially saved by players who took screenshots. You can search for archive repositories, but the physical location no longer exists.</p>
+<h2>How to Navigate and Stay Safe</h2>
+<p>Use the <a href="https://atlas.2b2t.com" target="_blank" rel="noopener">2B2T Atlas</a> to search coordinates and plan your route in real-time. Download the mod “Carpet” to control your movement while looking at the map. Always travel in the nether for long distances: one nether block equals eight overworld blocks. For example, to reach L'Infant (X: -1400, Z: 3000), you need to go nether X: -175, Z: 375. Also, learn the main nether highway routes from our <a href="/2b2t-nether-highway-guide">nether travel guide</a> to avoid getting lost.</p>
+<h3>Safety checklist before each journey:</h3>
+<ul>
+<li>Armor: Full diamond with protection IV (enchanted from villagers or looted from spawn chests)</li>
+<li>Food: 2 stacks of steak or baked potatoes</li>
+<li>Weapons: Sharpness V sword (or bow with flame)</li>
+<li>Pots: Fire resistance (essential for crossing lava oceans), speed II</li>
+<li>Totem of Undying (if you have one)</li>
+<li>Bed for respawn (place at a safe distance from the destination)</li>
+</ul>
+<p>Camps of PvPers tend to cluster around nether highways on weekends (Friday to Sunday). If possible, travel on weekdays during off-peak hours. Also, avoid using elytra above the base—you become a visible target.</p>
+<h2>Your Expedition Checklist</h2>
+<ol>
+<li><strong>Start small</strong> — visit Spawn Mural first to get used to the environment.</li>
+<li><strong>Bring a friend</strong> — or at least</li>
+</ol>
+<aside class="article-sidebar pixel-panel">
+          <span class="sidebar-label">Quick Tips</span>
+          <p>The Mace is the biggest change. Master Wind Charge + Mace drop for instant kills.</p>
+          <h3>On This Page</h3>
+          <ul class="toc-list">
+            <li><a class="inline-link" href="#what-changed">What changed</a></li>
+            <li><a class="inline-link" href="#mace-pvp">Mace in PvP</a></li>
+            <li><a class="inline-link" href="#trial-chambers">Trial Chambers</a></li>
+            <li><a class="inline-link" href="#phantom-changes">Phantom changes</a></li>
+            <li><a class="inline-link" href="#known-bugs">Known bugs</a></li>
+            <li><a class="inline-link" href="#survival-strategy">Strategy update</a></li>
+            <li><a class="inline-link" href="#faq">FAQ</a></li>
+          </ul>
+          <h3 style="margin-top: 28px;">Join our Discord</h3>
+          <p>Discuss guides, ask questions, and connect with other 2B2T players.</p>
+          <a class="button" href="https://discord.gg/eE9r8t836S" target="_blank" rel="noreferrer">Join Our Discord &rarr;</a>
+        </aside>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">More Guides</span>
+          <h2>Related 2B2T reading</h2>
+          <p>Explore more guides to master Minecraft's oldest anarchy server.</p>
+        </div>
+        <div class="related-grid">
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#9889; 2B2T PvP Guide: Crystal &amp; Axe Combat Strategies (2026)</h3>
+            <p>Master crystal PvP and axe combat alongside the new Mace meta. Understand the full combat toolkit.</p>
+            <a class="card-link" href="/articles/2b2t-pvp-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128736; 2B2T Survival Guide: Food, Tools and First Base</h3>
+            <p>Secure your supplies before you start exploring new 1.21.4 content. Covers essentials for sustained gameplay.</p>
+            <a class="card-link" href="/articles/survival-guide.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128200; 2B2T Server Report 2026: Player Count &amp; Queue Times</h3>
+            <p>Version updates always cause queue spikes. Check current server metrics and wait times.</p>
+            <a class="card-link" href="/articles/server-report-2026.html">Read Guide &rarr;</a>
+          </article>
+          <article class="related-card pixel-panel">
+            <h3 class="card-title">&#128279; How to Skip 2B2T Queue &amp; Wait Time Tips (2026)</h3>
+            <p>Priority queue tips and tricks to get in faster during the post-update rush.</p>
+            <a class="card-link" href="/articles/queue-wait-tips.html">Read Guide &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-panel pixel-panel">
+      <p class="footer-copy"><strong>Copyright:</strong> &copy; 2026 2B2T Guide. All rights reserved.</p>
+      <p class="footer-copy"><strong>Sources:</strong> 2B2T official site, Minecraft Wiki, community discussions, and player reports.</p>
+      <p class="footer-copy"><strong>Disclaimer:</strong> This is an independent fan resource. We are not affiliated with Mojang, Microsoft, or the official 2B2T administration.</p>
+    </div>
+  </div>
+</footer>
+
+  
+<script>
+  function updateNavigationState() { var nav = document.querySelector('.site-nav'); if (!nav) { return; } if (window.scrollY > 24) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); } }
+  function setupMobileNavigation() { var toggle = document.querySelector('[data-nav-toggle]'); var menu = document.querySelector('[data-nav-menu]'); if (!toggle || !menu) { return; } toggle.addEventListener('click', function () { var isOpen = menu.classList.toggle('open'); toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false'); }); menu.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }); }); }
+  function bootSiteUI() { updateNavigationState(); setupMobileNavigation(); window.addEventListener('scroll', updateNavigationState, { passive: true }); }
+  document.addEventListener('DOMContentLoaded', bootSiteUI);
+</script>
+</body>
+</html>
